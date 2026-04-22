@@ -1,1 +1,0 @@
-{"version":3,"file":"result-reshaper.d.ts","sourceRoot":"","sources":["../../../../src/sqb/adapters/postgres/result-reshaper.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAKH,qBAAa,cAAc;IAC1B,MAAM,CAAC,OAAO,CAAC,QAAQ,EAAE,GAAG,EAAE,EAAE,OAAO,EAAE,GAAG,EAAE,EAAE,QAAQ,EAAE,GAAG,EAAE,GAAG,GAAG,EAAE;CAoDvE"}

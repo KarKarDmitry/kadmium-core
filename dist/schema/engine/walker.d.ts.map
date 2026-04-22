@@ -1,1 +1,0 @@
-{"version":3,"file":"walker.d.ts","sourceRoot":"","sources":["../../../src/schema/engine/walker.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,mBAAmB,CAAC;AAGhD,MAAM,WAAW,cAAc;IAC9B,SAAS,CAAC,CAAC,OAAO,EAAE,WAAW,EAAE,IAAI,EAAE,MAAM,EAAE,GAAG,IAAI,CAAC;CACvD;AAED,wBAAgB,YAAY,CAC3B,QAAQ,EAAE,WAAW,EAAE,EACvB,OAAO,EAAE,cAAc,EACvB,UAAU,GAAE,MAAM,EAAO,QAsCzB"}
