@@ -1,0 +1,1 @@
+{"version":3,"file":"selectable.js","sourceRoot":"","sources":["../../../src/repo/types/selectable.ts"],"names":[],"mappings":";;;AAEA,MAAa,eAAe;IAO1B,YACkB,MAIf,EACe,KAAc;QALd,WAAM,GAAN,MAAM,CAIrB;QACe,UAAK,GAAL,KAAK,CAAS;QARhB,cAAS,GAAuB,kBAAkB,CAAC;IAS/D,CAAC;IAEE,EAAE,CACP,KAAQ;QAER,OAAO,IAAI,eAAe,CAAC,IAAI,CAAC,MAAM,EAAE,KAAK,CAAQ,CAAC;IACxD,CAAC;CACF;AArBD,0CAqBC"}

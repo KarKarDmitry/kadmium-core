@@ -1,0 +1,1 @@
+{"version":3,"file":"profiler.d.ts","sourceRoot":"","sources":["../../../src/core/profiling/profiler.ts"],"names":[],"mappings":"AA0BA,qBAAa,QAAQ;IACpB,OAAO,CAAC,MAAM,CAAC,SAAS,CAAS;IACjC,OAAO,CAAC,MAAM,CAAC,OAAO,CAA0B;IAEhD;;OAEG;WACW,MAAM,CAAC,KAAK,UAAO;IASjC;;;OAGG;WACW,OAAO,CAAC,QAAQ,EAAE,MAAM,IAEpC,QAAQ,GAAG,EACX,aAAa,MAAM,EACnB,YAAY,kBAAkB;IAwDhC;;OAEG;WACW,OAAO;CAiJrB"}
