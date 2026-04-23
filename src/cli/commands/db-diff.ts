@@ -1,18 +1,9 @@
-/**
- * CLI command: kadmium:db:diff
- * Shows detailed diff between schema definitions and actual DB.
- * Includes SQL preview.
- *
- * Usage:
- *   ts-node ./src/cli/commands/db-diff.ts
- */
-
 import * as dotenv from "dotenv";
-import { Kadmium } from "../../kadmium-app";
+import { Kadmium } from "../../kadmium-app.js";
 
-dotenv.config();
+export async function run() {
+	dotenv.config();
 
-async function main() {
 	Kadmium.configure({
 		schemaSources: ["./src/example-schemas/**/*.schema.ts"],
 		db: {
@@ -29,8 +20,7 @@ async function main() {
 
 	const dbMutator = Kadmium.getDbMutator();
 	if (!dbMutator) {
-		console.error("❌ DbMutator not initialized. Call Kadmium.start() first.\n");
-		process.exit(1);
+		throw new Error("DbMutator not initialized");
 	}
 
 	const diffResult = await dbMutator.getDiff();
@@ -51,7 +41,7 @@ async function main() {
 
 	if (!diffResult.hasChanges) {
 		console.log("\n✅ No changes detected. DB matches schemas.\n");
-		process.exit(0);
+		return;
 	}
 
 	console.log("\n📝 SQL Preview:\n");
@@ -99,13 +89,5 @@ async function main() {
 		console.log();
 	}
 
-	console.log(
-		'   Run "npm run kadmium:db:migrate" to apply these changes.\n',
-	);
-	process.exit(0);
+	console.log(`Run "kadmium db:migrate" to apply changes.\n`);
 }
-
-main().catch((err) => {
-	console.error("FATAL ERROR:", err);
-	process.exit(1);
-});

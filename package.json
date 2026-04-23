@@ -1,6 +1,6 @@
 {
   "name": "@karkardmitry/kadmium-core",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
   "author": "Dmitry Karmanov (karkardmitry)",
   "license": "MIT",
@@ -9,7 +9,8 @@
     "url": "https://github.com/karkardmitry/kadmium.git"
   },
   "main": "dist/kadmium-app.js",
-  "types": "dist/kadmium-app.d.ts",
+  "type": "module",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -34,6 +35,35 @@
     "test": "npm run build && ts-node ./test/runners/integration-runner.ts && ts-node ./test/runners/unit-runner.ts",
     "test:integration": "npm run build && ts-node ./test/runners/integration-runner.ts",
     "test:unit": "npm run build && ts-node ./test/runners/unit-runner.ts"
+  },
+  "bin": {
+    "kadmium": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schema": {
+      "default": "./dist/schema/index.js",
+      "types": "./dist/schema/index.d.ts"
+    },
+    "./controller": {
+      "default": "./dist/controller/init.js",
+      "types": "./dist/controller/init.d.ts"
+    },
+    "./validation": {
+      "default": "./dist/validation/init.js",
+      "types": "./dist/validation/init.d.ts"
+    },
+    "./route": {
+      "default": "./dist/route/adapters/rest.adapter.js",
+      "types": "./dist/route/adapters/rest.adapter.d.ts"
+    },
+    "./sqb": {
+      "default": "./dist/sqb/adapters/postgres/index.js",
+      "types": "./dist/sqb/adapters/postgres/index.d.ts"
+    }
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",

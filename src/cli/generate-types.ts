@@ -1,10 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Field_OPT, InputField_OPT } from "../schema/types/fields";
-import { RelationMetadata } from "../repo/types/relations";
-import { AppCore } from "../core/app-core";
-import { SchemaCore } from "../core/schema-core";
-import { Kadmium } from "../kadmium-app";
+import type { Field_OPT, InputField_OPT } from "../schema/types/fields.js";
+import type { RelationMetadata } from "../repo/types/relations.js";
+import { AppCore } from "../core/app-core.js";
+import { SchemaCore } from "../core/schema-core.js";
+import { Kadmium } from "../kadmium-app.js";
+import type { Schema_OPT } from "../schema/types/schema.js";
+import type { KadmiumFeature } from "../features/types/base.feature.js";
 
 // ─────────────────────────────────────────────
 // Type Guard
@@ -18,8 +20,7 @@ function isInputField(field: Field_OPT): field is InputField_OPT {
 // Argument Parsing
 // ─────────────────────────────────────────────
 
-function parseArgs() {
-	const args = process.argv.slice(2);
+function parseArgs(args: string[]) {
 	const options = {
 		target: null as string | null,
 	};
@@ -29,6 +30,7 @@ function parseArgs() {
 			options.target = arg.split("=")[1];
 		}
 	}
+
 	return options;
 }
 
@@ -193,8 +195,8 @@ function generateConf(
 
 	const featureClasses = schemaCore.features;
 	const featureNames = featureClasses
-		.map((f) => f.constructor.name)
-		.filter((name) => name && name !== "KadmiumFeature");
+		.map((f: any) => f.constructor.name)
+		.filter((name: any) => name && name !== "KadmiumFeature");
 
 	let result = `\n\t// @Kadmium.gen_skip:conf\n`;
 	result += `\t_conf_: ModelConfig<this> = {\n`;
@@ -235,13 +237,13 @@ function generateConf(
 // Main Generation
 // ─────────────────────────────────────────────
 
-async function generate() {
-	const options = parseArgs();
+export async function run(args: string[] = []) {
+	const options = parseArgs(args);
 	console.log("Starting model generation with options:", options);
 
 	// Use the Kadmium manager
 	Kadmium.configure({
-		schemaSources: ["./src/example-schemas/**/*.schema.ts"],
+		schemaSources: ["./src/schemas/**/*.schema.ts"],
 	});
 	await Kadmium.preheat();
 	const appCore = Kadmium.appCore;
@@ -328,8 +330,8 @@ async function generate() {
 
 		const featureClasses = schemaCore.features;
 		const featureImports = featureClasses
-			.map((f) => f.constructor.name)
-			.filter((name) => name && name !== "KadmiumFeature")
+			.map((f: KadmiumFeature) => f.constructor.name)
+			.filter((name: any) => name && name !== "KadmiumFeature")
 			.join(", ");
 
 		if (featureImports) {
@@ -425,8 +427,3 @@ async function generate() {
 
 	console.log("Model generation finished successfully.");
 }
-
-generate().catch((error) => {
-	console.error("An error occurred during model generation:", error);
-	process.exit(1);
-});

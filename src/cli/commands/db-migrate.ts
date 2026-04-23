@@ -1,18 +1,9 @@
-/**
- * CLI command: kadmium:db:migrate
- * Applies schema migrations to the database.
- * Wraps all operations in a transaction for safety.
- *
- * Usage:
- *   ts-node ./src/cli/commands/db-migrate.ts
- */
-
 import * as dotenv from "dotenv";
-import { Kadmium } from "../../kadmium-app";
+import { Kadmium } from "../../kadmium-app.js";
 
-dotenv.config();
+export async function run() {
+	dotenv.config();
 
-async function main() {
 	Kadmium.configure({
 		schemaSources: ["./src/example-schemas/**/*.schema.ts"],
 		db: {
@@ -29,15 +20,14 @@ async function main() {
 
 	const dbMutator = Kadmium.getDbMutator();
 	if (!dbMutator) {
-		console.error("❌ DbMutator not initialized. Call Kadmium.start() first.\n");
-		process.exit(1);
+		throw new Error("DbMutator not initialized");
 	}
 
 	const diff = await dbMutator.getDiff();
 
 	if (!diff.hasChanges) {
 		console.log("✅ No changes detected. DB matches schemas.\n");
-		process.exit(0);
+		return;
 	}
 
 	const dbAdapter = (Kadmium as any).dbAdapter;
@@ -46,12 +36,22 @@ async function main() {
 	try {
 		const applied = await dbMutator.applyMigrations(txAdapter);
 
-		// Count applied operations by type
-		let createdTables = 0, addedColumns = 0, alteredColumns = 0, addedIndexes = 0, addedFKs = 0;
+		// статистика
+		let createdTables = 0,
+			addedColumns = 0,
+			alteredColumns = 0,
+			addedIndexes = 0,
+			addedFKs = 0;
+
 		for (const op of applied) {
 			if (op.startsWith("CREATE TABLE")) createdTables++;
 			else if (op.startsWith("ADD COLUMN")) addedColumns++;
-			else if (op.startsWith("ALTER TYPE") || op.startsWith("ALTER NULLABLE") || op.startsWith("ALTER DEFAULT")) alteredColumns++;
+			else if (
+				op.startsWith("ALTER TYPE") ||
+				op.startsWith("ALTER NULLABLE") ||
+				op.startsWith("ALTER DEFAULT")
+			)
+				alteredColumns++;
 			else if (op.startsWith("ADD INDEX")) addedIndexes++;
 			else if (op.startsWith("ADD FK")) addedFKs++;
 		}
@@ -71,22 +71,15 @@ async function main() {
 			console.log(`   ✓ ${op}`);
 		}
 		console.log();
-		process.exit(0);
+
 	} catch (err) {
-		// applyMigrations may have already committed phase 1,
-		// so rollback might not undo table creation. Still attempt it.
 		try {
 			await txAdapter.rollback();
 		} catch {
-			// Ignore — partial commit already happened
+			// ок, частичный commit уже мог произойти
 		}
+
 		console.error("\n❌ Migration failed.\n");
-		console.error(err);
-		process.exit(1);
+		throw err; // ❗ важно: не process.exit
 	}
 }
-
-main().catch((err) => {
-	console.error("FATAL ERROR:", err);
-	process.exit(1);
-});

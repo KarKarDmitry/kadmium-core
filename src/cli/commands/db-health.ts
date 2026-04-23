@@ -1,17 +1,9 @@
-/**
- * CLI command: kadmium:db:health
- * Checks if the database schema matches the defined schemas.
- *
- * Usage:
- *   ts-node ./src/cli/commands/db-health.ts
- */
-
 import * as dotenv from "dotenv";
-import { Kadmium } from "../../kadmium-app";
+import { Kadmium } from "../../kadmium-app.js";
 
-dotenv.config();
+export async function run() {
+	dotenv.config();
 
-async function main() {
 	Kadmium.configure({
 		schemaSources: ["./src/example-schemas/**/*.schema.ts"],
 		db: {
@@ -38,23 +30,17 @@ async function main() {
 
 	if (health.isHealthy) {
 		console.log("\n✅ Database is healthy — all schemas match DB.\n");
-		process.exit(0);
-	} else {
-		console.log("\n⚠️  Schema mismatches detected:\n");
-		for (const issue of health.issues) {
-			console.log(`   • ${issue}`);
-		}
-		console.log(
-			'\n   Run "npm run kadmium:db:diff" for details.',
-		);
-		console.log(
-			'   Run "npm run kadmium:db:migrate" to apply changes.\n',
-		);
-		process.exit(1);
+		return; // ✅ вместо process.exit(0)
 	}
-}
 
-main().catch((err) => {
-	console.error("FATAL ERROR:", err);
-	process.exit(1);
-});
+	console.log("\n⚠️  Schema mismatches detected:\n");
+	for (const issue of health.issues) {
+		console.log(`   • ${issue}`);
+	}
+
+	console.log('\n   Run "kadmium db:diff" for details.');
+	console.log('   Run "kadmium db:migrate" to apply changes.\n');
+
+	// ❗ сигнализируем об ошибке через throw
+	throw new Error("Database schema mismatch");
+}

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import chalk = require("chalk");
-import Table = require("cli-table3");
+import chalk from 'chalk';
+import Table from 'cli-table3'
 
 // Define the structure for a single data point
 type ProfileDataPoint = {
@@ -34,8 +34,7 @@ export class Profiler {
 	public static enable(state = true) {
 		Profiler.isEnabled = state;
 		console.log(
-			`[Profiler] Collection is now ${
-				Profiler.isEnabled ? "ENABLED" : "DISABLED"
+			`[Profiler] Collection is now ${Profiler.isEnabled ? "ENABLED" : "DISABLED"
 			}.`,
 		);
 	}
