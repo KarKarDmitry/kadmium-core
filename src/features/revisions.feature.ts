@@ -9,7 +9,7 @@ import {
 	primary,
 	jsonb,
 	sections as s,
-} from "../schema/init";
+} from "../schema";
 import { controller, get } from "../controller/init";
 import { ControllerInstance } from "../controller/types/controller";
 import { ControllerContext } from "../route/types/context";
@@ -171,7 +171,7 @@ export class RevisionsFeature extends KadmiumFeature<Revision> {
 				return rows;
 			}),
 		]),
-		
+
 	];
 
 	private async _saveRevision(result: any, ctx: HookContext<Revision>) {

@@ -49,12 +49,12 @@
       "types": "./dist/schema/index.d.ts"
     },
     "./controller": {
-      "default": "./dist/controller/init.js",
-      "types": "./dist/controller/init.d.ts"
+      "default": "./dist/controller/index.js",
+      "types": "./dist/controller/index.d.ts"
     },
     "./validation": {
-      "default": "./dist/validation/init.js",
-      "types": "./dist/validation/init.d.ts"
+      "default": "./dist/validation/index.js",
+      "types": "./dist/validation/index.d.ts"
     },
     "./route": {
       "default": "./dist/route/adapters/rest.adapter.js",
@@ -63,6 +63,30 @@
     "./sqb": {
       "default": "./dist/sqb/adapters/postgres/index.js",
       "types": "./dist/sqb/adapters/postgres/index.d.ts"
+    },
+    "./auth": {
+      "default": "./dist/auth/index.js",
+      "types": "./dist/auth/index.d.ts"
+    },
+    "./cli": {
+      "default": "./dist/cli/index.js",
+      "types": "./dist/cli/index.d.ts"
+    },
+    "./db-mutator": {
+      "default": "./dist/db-mutator/index.js",
+      "types": "./dist/db-mutator/index.d.ts"
+    },
+    "./features": {
+      "default": "./dist/features/index.js",
+      "types": "./dist/features/index.d.ts"
+    },
+    "./model": {
+      "default": "./dist/model/index.js",
+      "types": "./dist/model/index.d.ts"
+    },
+    "./repo": {
+      "default": "./dist/repo/index.js",
+      "types": "./dist/repo/index.d.ts"
     }
   },
   "devDependencies": {

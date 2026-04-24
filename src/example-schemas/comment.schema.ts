@@ -5,7 +5,7 @@ import {
 	ref,
 	string,
 	sections as s,
-} from "../schema/init";
+} from "../schema";
 import { SoftDeleteFeature } from "../features/soft-delete.feature";
 
 export const commentSchema = schema({
@@ -46,4 +46,3 @@ export const commentSchema = schema({
 	}),
 	features: [SoftDeleteFeature],
 });
-	

@@ -5,7 +5,7 @@ import {
 	sections as s,
 	primary,
 	ref,
-} from "../schema/init";
+} from "../schema";
 
 export const tc20_userSchema = schema({
 	collection: "tc20_user",

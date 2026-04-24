@@ -6,7 +6,7 @@ import {
 	ref,
 	sections as s,
 	primary,
-} from "../schema/init";
+} from "../schema";
 
 export const tc20_postSchema = schema({
 	collection: "tc20_post",

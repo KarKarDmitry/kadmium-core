@@ -8,7 +8,7 @@ import {
   datetime,
   sections as s,
   action,
-} from "../schema/init";
+} from "../schema";
 import { AuditFeature } from "../features/audit.feature";
 import { RevisionsFeature } from "../features/revisions.feature";
 
