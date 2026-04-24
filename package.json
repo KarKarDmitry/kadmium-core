@@ -1,6 +1,6 @@
 {
   "name": "@karkardmitry/kadmium-core",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
   "author": "Dmitry Karmanov (karkardmitry)",
   "license": "MIT",

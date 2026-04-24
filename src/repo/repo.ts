@@ -87,7 +87,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает beforeCreate хуки МОДЕЛИ (_conf_.hooks).
 	 * Вызывается ПЕРЕД хуками фич.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelBeforeCreate(
 		data: Partial<T>,
 	): Promise<{ data: Record<string, unknown>; operation: string }> {
@@ -109,7 +109,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает afterCreate хуки МОДЕЛИ (_conf_.hooks).
 	 * Вызывается ПЕРЕД хуками фич.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelAfterCreate(result: T): Promise<T> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.afterCreate?.length) return result;
@@ -127,7 +127,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает beforeUpdate хуки МОДЕЛИ (_conf_.hooks).
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelBeforeUpdate(
 		data: Partial<T>,
 	): Promise<{ data: Record<string, unknown>; operation: string }> {
@@ -149,7 +149,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает afterUpdate хуки МОДЕЛИ (_conf_.hooks).
 	 * Hooks are applied to each result individually.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelAfterUpdate(results: T[]): Promise<T[]> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.afterUpdate?.length) return results;
@@ -171,7 +171,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает beforeDelete хуки МОДЕЛИ (_conf_.hooks).
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelBeforeDelete(): Promise<{ operation: string }> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.beforeDelete?.length) {
@@ -191,7 +191,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает afterDelete хуки МОДЕЛИ (_conf_.hooks).
 	 * Hooks are applied to each result individually.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelAfterDelete(results: T[]): Promise<void> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.afterDelete?.length) return;
@@ -208,7 +208,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает beforeRead хуки МОДЕЛИ (_conf_.hooks).
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelBeforeRead(): Promise<WhereCondition[]> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.beforeRead?.length) return [];
@@ -225,7 +225,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает afterRead хуки МОДЕЛИ (_conf_.hooks).
 	 * Hooks are applied to each result individually.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runModelAfterRead(results: T[]): Promise<T[]> {
 		const modelHooks = this.schemaCore.modelHooks as ModelHooks<T> | null;
 		if (!modelHooks?.afterRead?.length) return results;
@@ -247,7 +247,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает beforeCreate хуки всех фич схемы.
 	 * Данные модифицируются через HookContext.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureBeforeCreate(
 		data: Partial<T>,
 	): Promise<{ data: Record<string, unknown>; operation: string }> {
@@ -273,7 +273,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает afterCreate хуки всех фич схемы.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureAfterCreate(result: T): Promise<void> {
 		const ctx = new HookContext<T>(
 			"create",
@@ -292,7 +292,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает beforeUpdate хуки всех фич схемы.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureBeforeUpdate(
 		data: Partial<T>,
 	): Promise<{ data: Record<string, unknown>; operation: string }> {
@@ -318,7 +318,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает afterUpdate хуки всех фич схемы.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureAfterUpdate(results: T[]): Promise<void> {
 		const ctx = new HookContext<T>(
 			"update",
@@ -338,7 +338,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * Запускает beforeDelete хуки всех фич схемы.
 	 * Может сменить операцию на "update" (для soft-delete).
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureBeforeDelete(): Promise<{
 		operation: string;
 		data: Record<string, unknown>;
@@ -364,7 +364,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает afterDelete хуки всех фич схемы.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async _runFeatureAfterDelete(results: T[]): Promise<void> {
 		const ctx = new HookContext<T>(
 			"delete",
@@ -686,7 +686,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	 * @param callback - Function to execute within the transaction.
 	 * @returns The result of the callback.
 	 */
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async transaction<R>(callback: (tx: ITransaction) => Promise<R>): Promise<R> {
 		const txAdapter = await this.adapter.beginTransaction();
 		try {

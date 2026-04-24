@@ -15,7 +15,8 @@ import {
   GenConfig,
 } from "./core/types/config.js";
 
-import { plural, singular } from "pluralize"; // Импортируем pluralize
+import pluralize from "pluralize";
+const { plural, singular } = pluralize
 import { RelationMetadata } from "./repo/types/relations.js";
 import { Ref_OPT } from "./schema/types/fields.js";
 import { DbConfig, DbAdapterConfig } from "./sqb/types/config.js";
@@ -323,7 +324,7 @@ export class KadmiumApp {
       return await import(fileUrl);
     } catch {
       // Fallback to require for .ts files (ts-node compatibility)
-      const req = createRequire(__filename);
+      const req = createRequire(import.meta.url);
       return req(absolutePath);
     }
   }

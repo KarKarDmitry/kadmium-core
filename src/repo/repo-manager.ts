@@ -24,7 +24,7 @@ export class RepoManager {
    * Binds the model class to SchemaCore to load _conf_.hooks.
    * @param schema The schema class (e.g., User).
    */
-  @Profiler.Profile(__filename)
+  @Profiler.Profile(import.meta.url)
   public get<T extends AnyModel>(
     schema: new () => T,
   ): KadmiumRepo<T> {

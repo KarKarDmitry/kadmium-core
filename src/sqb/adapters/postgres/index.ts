@@ -52,7 +52,7 @@ class TransactionalNodePostgresAdapter
 		}
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async execute<T extends AnyModel>(
 		sqb: KadmiumSqb<T>,
 	): Promise<any[]> {
@@ -65,7 +65,7 @@ class TransactionalNodePostgresAdapter
 		]);
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async create<T extends AnyModel>(
 		collectionName: string,
 		data: Partial<T>,
@@ -82,7 +82,7 @@ class TransactionalNodePostgresAdapter
 		return result.rows[0];
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async createMany<T extends AnyModel>(
 		collectionName: string,
 		data: Partial<T>[],
@@ -118,7 +118,7 @@ class TransactionalNodePostgresAdapter
 		return result.rows;
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async raw(sql: string, params: any[]): Promise<any[]> {
 		return (await this.client.query(sql, params)).rows;
 	}
@@ -149,7 +149,7 @@ export class NodePostgresAdapter extends SqlGenerator implements DbAdapter {
 		return new TransactionalNodePostgresAdapter(client);
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async execute<T extends AnyModel>(
 		sqb: KadmiumSqb<T>,
 	): Promise<any[]> {
@@ -162,7 +162,7 @@ export class NodePostgresAdapter extends SqlGenerator implements DbAdapter {
 		]);
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async create<T extends AnyModel>(
 		collectionName: string,
 		data: Partial<T>,
@@ -178,7 +178,7 @@ export class NodePostgresAdapter extends SqlGenerator implements DbAdapter {
 		return (await this.pool.query(text, values)).rows[0];
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async createMany<T extends AnyModel>(
 		collectionName: string,
 		data: Partial<T>[],
@@ -213,7 +213,7 @@ export class NodePostgresAdapter extends SqlGenerator implements DbAdapter {
 		return (await this.pool.query(text, allValues)).rows;
 	}
 
-	@Profiler.Profile(__filename)
+	@Profiler.Profile(import.meta.url)
 	async raw(sql: string, params: any[]): Promise<any[]> {
 		return (await this.pool.query(sql, params)).rows;
 	}
