@@ -1,6 +1,6 @@
-import { NormalizedField_OPT } from "../types/fields";
-import { Section_OPT } from "../types/sections";
-import { walkSections } from "./walker";
+import { NormalizedField_OPT } from "../types/fields.js";
+import { Section_OPT } from "../types/sections.js";
+import { walkSections } from "./walker.js";
 
 export function getNormalizedFields(
 	sections: Section_OPT[],

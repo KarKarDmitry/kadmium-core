@@ -1,4 +1,4 @@
 // src/model/init.ts
 
-export * from "./model";
-export * from "./types";
+export * from "./types.js";
+export * from "./model.js";

@@ -1,12 +1,12 @@
-import { DbDdlAdapter } from "../../sqb/adapters/adapter";
-import { DiffResult, DiffOp } from "../types";
+import { DbDdlAdapter } from "../../sqb/adapters/adapter.js";
+import { DiffResult, DiffOp } from "../types/index.js";
 
 /**
  * Applies a DiffResult to the actual database via DbDdlAdapter.
  * Runs operations in order, wrapped in a transaction when possible.
  */
 export class MigrationRunner {
-	constructor(private ddl: DbDdlAdapter) {}
+	constructor(private ddl: DbDdlAdapter) { }
 
 	/**
 	 * Applies all operations from a DiffResult.

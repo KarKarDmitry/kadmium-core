@@ -1,5 +1,5 @@
-import { Section_OPT } from "../types/sections";
-import { Errors } from "../../core/errors";
+import { Section_OPT } from "../types/sections.js";
+import { Errors } from "../../core/errors.js";
 
 export interface SectionVisitor {
 	onSection?(section: Section_OPT, path: string[]): void;

@@ -1,7 +1,7 @@
-import { SchemaCore } from "../../core/schema-core";
-import { AppCore } from "../../core/app-core";
-import { Ref_OPT, NormalizedInputField_OPT } from "../../schema/types/fields";
-import { RelationMetadata } from "../../repo/types/relations";
+import { SchemaCore } from "../../core/schema-core.js";
+import { AppCore } from "../../core/app-core.js";
+import { Ref_OPT, NormalizedInputField_OPT } from "../../schema/types/fields.js";
+import { RelationMetadata } from "../../repo/types/relations.js";
 import {
 	DbSchema,
 	DiffResult,
@@ -18,8 +18,8 @@ import {
 	DbIndex,
 	DbForeignKey,
 	HealthCheckResult,
-} from "../types";
-import { DbInspector } from "../inspector/db-inspector";
+} from "../types/index.js";
+import { DbInspector } from "../inspector/db-inspector.js";
 
 /**
  * Maps Kadmium field types to PostgreSQL data type names (as returned by information_schema).
@@ -81,7 +81,7 @@ export class SchemaDiff {
 	constructor(
 		private appCore: AppCore,
 		private dbSchema: DbSchema,
-	) {}
+	) { }
 
 	/**
 	 * Computes the diff between schema definitions and the actual DB.

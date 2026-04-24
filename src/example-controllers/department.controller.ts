@@ -1,6 +1,6 @@
-import { controller, get, post, del } from "../controller/init";
-import { Department } from "../models/schemas/Department";
-import { v } from "../validation";
+import { controller, get, post, del } from "../controller/init.js";
+import { Department } from "../models/schemas/Department.js";
+import { v } from "../validation/index.js";
 
 export default controller(Department, [
 	get("/departments", async (ctx) => {

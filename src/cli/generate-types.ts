@@ -8,6 +8,7 @@ import { Kadmium } from "../kadmium-app.js";
 import type { Schema_OPT } from "../schema/types/schema.js";
 import type { KadmiumFeature } from "../features/types/base.feature.js";
 
+
 // ─────────────────────────────────────────────
 // Type Guard
 // ─────────────────────────────────────────────
@@ -23,11 +24,14 @@ function isInputField(field: Field_OPT): field is InputField_OPT {
 function parseArgs(args: string[]) {
 	const options = {
 		target: null as string | null,
+		config: null as string | null
 	};
 
 	for (const arg of args) {
 		if (arg.startsWith("--target=")) {
 			options.target = arg.split("=")[1];
+		} else if (arg.startsWith("--config=")) {
+			options.config = arg.split('=')[1];
 		}
 	}
 
@@ -76,13 +80,16 @@ function capitalizeFirstLetter(str: string): string {
 /**
  * Определяет относительный путь от текущей папки до целевой.
  */
-function getRelativeImportPath(fromFolder: string, toFolder: string): string {
+function getRelativeImportPath(
+	fromFolder: string,
+	toFolder: string,
+	baseOutputDir: string
+): string {
 	if (fromFolder === toFolder) return ".";
-	const rel = path.relative(
-		path.resolve(process.cwd(), "src", fromFolder),
-		path.resolve(process.cwd(), "src", toFolder),
-	);
-	// Normalize Windows backslashes to forward slashes for imports
+	const root = path.resolve(process.cwd(), baseOutputDir);
+	const fromAbs = path.resolve(root, fromFolder);
+	const toAbs = path.resolve(root, toFolder);
+	const rel = path.relative(fromAbs, toAbs) || ".";
 	return rel.replace(/\\/g, "/");
 }
 
@@ -122,6 +129,7 @@ function generateSchemaRelationsAndImports(
 	collectionName: string,
 	interfaceName: string,
 	currentFolder: string,
+	baseOutputDir: string,
 ): { relationsTypeString: string; relationImports: Map<string, string> } {
 	const schemaRelations: RelationMetadata[] = [];
 	const relationImports = new Map<string, string>();
@@ -134,7 +142,7 @@ function generateSchemaRelationsAndImports(
 				(s) => s.collection === meta.toSchema,
 			);
 			const targetFolder = targetSchema?.folder ?? "models";
-			const relPath = getRelativeImportPath(currentFolder, targetFolder);
+			const relPath = getRelativeImportPath(currentFolder, targetFolder, baseOutputDir);
 			relationImports.set(targetClassName, relPath);
 		}
 	});
@@ -242,9 +250,7 @@ export async function run(args: string[] = []) {
 	console.log("Starting model generation with options:", options);
 
 	// Use the Kadmium manager
-	Kadmium.configure({
-		schemaSources: ["./src/schemas/**/*.schema.ts"],
-	});
+	await Kadmium.setConfig(options.config ?? undefined)
 	await Kadmium.preheat();
 	const appCore = Kadmium.appCore;
 
@@ -270,7 +276,11 @@ export async function run(args: string[] = []) {
 	console.log(`Found ${schemasToProcess.length} schemas to process.`);
 
 	const sensitiveTypes = appCore.securedTypes;
-	const baseOutputDir = appCore.gen.models_output ?? "models";
+
+	const genConfig = appCore.gen ?? {}
+
+	const baseOutputDir = genConfig.models_output ?? "models";
+	const importBase = genConfig.importBase ?? "@karkardmitry/kadmium-core";
 
 	for (const schemaCore of schemasToProcess) {
 		const collectionName = schemaCore.collection;
@@ -280,7 +290,7 @@ export async function run(args: string[] = []) {
 		const folder = schemaCore.folder ?? "models";
 
 		// Determine output path: baseOutputDir/folder/InterfaceName.ts
-		const outputDir = path.join(process.cwd(), "src", baseOutputDir, folder);
+		const outputDir = path.join(process.cwd(), baseOutputDir, folder);
 		const outputPath = path.join(outputDir, `${interfaceName}.ts`);
 
 		// Extract protected blocks from existing file
@@ -315,6 +325,7 @@ export async function run(args: string[] = []) {
 				collectionName,
 				interfaceName,
 				folder,
+				baseOutputDir
 			);
 
 		// ── Build class string ──
@@ -322,10 +333,10 @@ export async function run(args: string[] = []) {
 		classString += `// Use @Kadmium.gen_skip:<name> and @Kadmium.gen_continue:<name> to protect blocks.\n\n`;
 
 		// Imports
-		classString += `import { Model, ModelHookContext, ModelConfig } from "../../model/init";\n`;
-		classString += `import { PUBLIC_TYPE_SYMBOL, RELATIONS_SYMBOL } from "../../repo/symbols";\n`;
-		classString += `import { ToOneRelation, ToManyRelation } from "../../repo/types/relations";\n`;
-		classString += `import { KadmiumRefinementCtx } from "../../validation/types/refinement";\n`;
+		classString += `import { Model, ModelHookContext, ModelConfig } from "${importBase}/model";\n`;
+		classString += `import { PUBLIC_TYPE_SYMBOL, RELATIONS_SYMBOL } from "${importBase}/repo";\n`;
+		classString += `import { ToOneRelation, ToManyRelation } from "${importBase}/repo";\n`;
+		classString += `import { KadmiumRefinementCtx } from "${importBase}/validation";\n`;
 
 
 		const featureClasses = schemaCore.features;
@@ -335,7 +346,7 @@ export async function run(args: string[] = []) {
 			.join(", ");
 
 		if (featureImports) {
-			classString += `import { ${featureImports} } from "../../features/init";\n`;
+			classString += `import { ${featureImports} } from "${importBase}/features";\n`;
 		}
 
 		if (relationImports.size > 0) {

@@ -214,6 +214,13 @@ export class NoDbAdapterConfiguredError extends KadmiumError {
   }
 }
 
+export class canNotLoadConfig extends KadmiumError {
+  constructor(cause?: Error) {
+    super("config", "CANT_LOAD_APP_CONFIG", "Cant load Kadmium config.", undefined, cause);
+    this.name = "canNotLoadConfig";
+  }
+}
+
 // ═══ Route errors ═══
 
 export class UnsupportedMethodError extends KadmiumError {
@@ -303,6 +310,7 @@ export const Errors = {
   config: {
     noDbAdapter: (cause?: Error) => new NoDbAdapterError(cause),
     noDbAdapterConfigured: (cause?: Error) => new NoDbAdapterConfiguredError(cause),
+    canNotLoadConfig: (cause?: any) => new canNotLoadConfig(cause),
   },
   route: {
     unsupportedMethod: (method: string, cause?: Error) => new UnsupportedMethodError(method, cause),

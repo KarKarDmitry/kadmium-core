@@ -1,12 +1,11 @@
-import { AnyModel } from "../model/model";
+import { AnyModel } from "../model/model.js";
 
-import { Profiler } from "../core/profiling/profiler";
-import { SchemaCore } from "../core/schema-core"; // Import SchemaCore
-import { DbAdapter } from "./adapters/adapter";
+import { Profiler } from "../core/profiling/profiler.js";
+import { SchemaCore } from "../core/schema-core.js"; // Import SchemaCore
+import { DbAdapter } from "./adapters/adapter.js";
 
-import { SelectableField } from "../repo/types/selectable";
-import { JoinOptions } from "../repo/types/query";
-import { cloneWhereGroup } from "./utils";
+import { SelectableField, JoinOptions } from "../repo/types/index.js";
+import { cloneWhereGroup } from "./utils.js";
 
 // --- Types for WHERE clause tree structure ---
 export type WhereCondition = {

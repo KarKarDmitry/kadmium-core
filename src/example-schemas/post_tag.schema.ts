@@ -1,4 +1,4 @@
-import { schema, form, primary, ref, sections as s } from "../schema";
+import { schema, form, primary, ref, sections as s } from "../schema/index.js";
 
 export const postTagSchema = schema({
 	collection: "post_tag",

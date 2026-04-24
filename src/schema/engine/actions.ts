@@ -1,6 +1,6 @@
-import { NormalizedAction_OPT, SectionActions_OPT } from "../types/actions";
-import { Section_OPT } from "../types/sections";
-import { walkSections } from "./walker";
+import { NormalizedAction_OPT, SectionActions_OPT } from "../types/actions.js";
+import { Section_OPT } from "../types/sections.js";
+import { walkSections } from "./walker.js";
 
 export function getFormActions(form: {
 	actions?: SectionActions_OPT[];

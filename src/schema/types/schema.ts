@@ -1,10 +1,10 @@
-import { Form_OPT } from "./form";
-import { NormalizedField_OPT, Primary_OPT } from "./fields";
-import { KadmiumFeature } from "../../features/types/base.feature";
-import { SchemaCore } from "../../core/schema-core";
-import { NormalizedAction_OPT } from "../../schema/types/actions";
-import { NormalizedSection_OPT } from "../../schema/types/sections";
-import { FeatureModel } from "../../model/types";
+import { Form_OPT } from "./form.js";
+import { NormalizedField_OPT, Primary_OPT } from "./fields.js";
+import { KadmiumFeature } from "../../features/types/base.feature.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { NormalizedAction_OPT } from "../../schema/types/actions.js";
+import { NormalizedSection_OPT } from "../../schema/types/sections.js";
+import { FeatureModel } from "../../model/types.js";
 
 export interface Schema_OPT {
   _meta: "schema";

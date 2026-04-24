@@ -1,10 +1,10 @@
-import { AppCore } from "../../core/app-core";
-import { SchemaCore } from "../../core/schema-core";
-import { IncludedRelation, WhereCondition, WhereGroup } from "../../sqb/kadmium-sqb";
-import { JoinOptions } from "../types/query";
-import { IRelationBuilder } from "../field-builders/relation-builder";
-import { RelationMetadata } from "../types/relations";
-import { Errors } from "../../core/errors";
+import { AppCore } from "../../core/app-core.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { IncludedRelation, WhereCondition, WhereGroup } from "../../sqb/kadmium-sqb.js";
+import { JoinOptions } from "../types/query/index.js";
+import { IRelationBuilder } from "../field-builders/relation-builder.js";
+import { RelationMetadata } from "../types/relations.js";
+import { Errors } from "../../core/errors.js";
 
 /**
  * Resolves include metadata from a relation builder into an IncludedRelation.

@@ -1,4 +1,4 @@
-import type { AppCore } from "../core/app-core";
+import type { AppCore } from "../core/app-core.js";
 
 export interface AuthServiceConfig {
   authServiceUrl: string;

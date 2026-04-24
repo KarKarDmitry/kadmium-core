@@ -1,14 +1,14 @@
 import { z, ZodObject, ZodRawShape, ZodType, ZodTypeAny, ZodIssue } from "zod";
-import { Errors } from "../../core/errors";
+import { Errors } from "../../core/errors.js";
 import {
 	ValidationAdapter,
 	ValidationResult,
 	ValidationError,
-} from "../types/adapter";
-import { SchemaRegistry } from "../../core/schema-core";
-import { ValidationMode } from "../../core/validation-core";
-import { ModelValidationRule } from "../../model/types";
-import { ValField } from "../val-struct";
+} from "../types/adapter.js";
+import { SchemaRegistry } from "../../core/schema-core.js";
+import { ValidationMode } from "../../core/validation-core.js";
+import { ModelValidationRule } from "../../model/types.js";
+import { ValField } from "../val-struct.js";
 
 export class ZodValidationAdapter implements ValidationAdapter {
 	private schema!: ZodTypeAny; // Changed to allow ZodEffects

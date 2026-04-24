@@ -1,5 +1,5 @@
-import { AnyModel } from "../../model/model";
-import { RELATIONS_SYMBOL } from "../symbols";
+import { AnyModel } from "../../model/model.js";
+import { RELATIONS_SYMBOL } from "../symbols.js";
 
 // --- METADATA TYPES ---
 export interface RelationMetadata {

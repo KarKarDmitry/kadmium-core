@@ -1,5 +1,5 @@
-import { AnyModel } from "../../model/model";
-import { RouteDefinition } from "../../route/types/route";
+import { AnyModel } from "../../model/model.js";
+import { RouteDefinition } from "../../route/types/route.js";
 
 /**
  * The object returned by the `controller()` DSL function.

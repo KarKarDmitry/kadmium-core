@@ -1,5 +1,5 @@
-import { NormalizedField_OPT } from "../../schema/types/fields";
-import { ValField } from "../val-struct";
+import { NormalizedField_OPT } from "../../schema/types/fields.js";
+import { ValField } from "../val-struct.js";
 
 export interface ValidationResult<T = any> {
 	success: boolean;

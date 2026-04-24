@@ -1,8 +1,8 @@
-import { AppCore } from "../../core/app-core";
-import { SchemaCore } from "../../core/schema-core";
-import { DbAdapter } from "../../sqb/adapters/adapter";
-import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb";
-import { SelectableField } from "../types/selectable";
+import { AppCore } from "../../core/app-core.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { DbAdapter } from "../../sqb/adapters/adapter.js";
+import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { SelectableField } from "../types/selectable.js";
 import {
 	AliasesMap,
 	AnySelectable,
@@ -11,21 +11,21 @@ import {
 	MultiFilterProxy,
 	MultiSelectProxy,
 	AggregateFunctions,
-} from "../types/query";
-import { IS_QUERY_BUILDER } from "../symbols";
-import { BaseQueryBuilder, toSqlString } from "./base-query.builder";
-import { createFilterProxy } from "../utils/filter-proxy";
-import { resolveInclude } from "../utils/include-resolver";
+} from "../types/query/index.js";
+import { IS_QUERY_BUILDER } from "../symbols.js";
+import { BaseQueryBuilder, toSqlString } from "./base-query.builder.js";
+import { createFilterProxy } from "../utils/filter-proxy.js";
+import { resolveInclude } from "../utils/include-resolver.js";
 
 import {
 	IRelationBuilder,
 	RelationProxy,
 	ToManyRelationBuilder,
 	ToOneRelationBuilder,
-} from "../field-builders/relation-builder";
-import { Errors } from "../../core/errors";
-import { RelationsOf } from "../types/relations";
-import { aggregates } from "../utils/aggregates";
+} from "../field-builders/relation-builder.js";
+import { Errors } from "../../core/errors.js";
+import { RelationsOf } from "../types/relations.js";
+import { aggregates } from "../utils/aggregates.js";
 
 type MultiRelationProxy<T extends AliasesMap> = {
 	[K in keyof T]: RelationProxy<InstanceType<T[K]>, K & string>;

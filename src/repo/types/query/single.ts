@@ -1,14 +1,14 @@
-import { AnyModel } from "../../../model/model";
-import { WhereCondition } from "../../../sqb/kadmium-sqb";
-import { IRelationBuilder } from "../../field-builders/relation-builder";
-import { SelectableField } from "../selectable";
+import { AnyModel } from "../../../model/model.js";
+import { WhereCondition } from "../../../sqb/kadmium-sqb.js";
+import { IRelationBuilder } from "../../field-builders/relation-builder.js";
+import { SelectableField } from "../selectable.js";
 import {
   AnySelectable,
   FilterProxy,
   GetFieldName,
   GetFieldType,
   IQueryBuilder,
-} from "./common";
+} from "./common.js";
 
 // --- Query Finalizer Interfaces ---
 

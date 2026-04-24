@@ -4,22 +4,20 @@
  */
 
 import { Pool, PoolClient } from "pg";
-import { AnyModel } from "../../../model/model";
+import { AnyModel } from "../../../model/model.js";
 import {
 	KadmiumSqb,
 	WhereCondition,
 	WhereGroup,
 	IncludedRelation,
-} from "../../kadmium-sqb";
-import { SchemaCore } from "../../../core/schema-core";
-import { IS_FILTER_BUILDER, IS_QUERY_BUILDER } from "../../../repo/symbols";
-import { BaseFilterBuilder } from "../../../repo/field-builders/base-filter.builder";
-import { AggregateField } from "../../../repo/types/aggregate";
-import { SelectableField } from "../../../repo/types/selectable";
-import { FieldReferenceBuilder } from "../../../repo/field-builders/field-reference.builder";
-import { Errors } from "../../../core/errors";
-import { cloneWhereGroup } from "../../utils";
-import { ResultReshaper } from "./result-reshaper";
+} from "../../kadmium-sqb.js";
+import { SchemaCore } from "../../../core/schema-core.js";
+import { IS_FILTER_BUILDER, IS_QUERY_BUILDER } from "../../../repo/symbols.js";
+import { BaseFilterBuilder, FieldReferenceBuilder } from '../../../repo/field-builders/index.js'
+import { AggregateField, SelectableField } from "../../../repo/types/index.js";
+import { Errors } from "../../../core/errors.js";
+import { cloneWhereGroup } from "../../utils.js";
+import { ResultReshaper } from "./result-reshaper.js";
 
 export abstract class SqlGenerator {
 	protected securedTypes!: Set<string>;

@@ -1,13 +1,13 @@
-import { AppCore } from "../core/app-core";
-import { SchemaCore } from "../core/schema-core";
-import { DbAdapter } from "../sqb/adapters/adapter";
-import { Profiler } from "../core/profiling/profiler";
-import { KadmiumRepo } from "./repo";
-import { AnyModel } from "../model/model";
-import { AliasesMap, FilterProxy, ITransaction, Public } from "./types/query";
-import { MultiQueryBuilder } from "./builders/builder.multi-query";
-import { WhereCondition } from "../sqb/kadmium-sqb";
-import { Errors } from "../core/errors";
+import { AppCore } from "../core/app-core.js";
+import { SchemaCore } from "../core/schema-core.js";
+import { DbAdapter } from "../sqb/adapters/adapter.js";
+import { Profiler } from "../core/profiling/profiler.js";
+import { KadmiumRepo } from "./repo.js";
+import { AnyModel } from "../model/model.js";
+import { AliasesMap, FilterProxy, ITransaction, Public } from "./types/query/index.js";
+import { MultiQueryBuilder } from "./builders/builder.multi-query.js";
+import { WhereCondition } from "../sqb/kadmium-sqb.js";
+import { Errors } from "../core/errors.js";
 
 export class RepoManager {
   private repoCache: Map<string, KadmiumRepo<any>> = new Map();

@@ -1,21 +1,21 @@
-import { AnyModel } from "../../../model/model";
-import { BooleanFilterBuilder } from "../../field-builders/boolean-filter.builder";
-import { NumberFilterBuilder } from "../../field-builders/number-filter.builder";
-import { StringFilterBuilder } from "../../field-builders/string-filter.builder";
-import { DateFilterBuilder } from "../../field-builders/date-filter.builder";
-import { WhereCondition } from "../../../sqb/kadmium-sqb";
-import { AggregateField } from "../aggregate";
-import { SelectableField } from "../selectable";
+import { AnyModel } from "../../../model/model.js";
+import { BooleanFilterBuilder } from "../../field-builders/boolean-filter.builder.js";
+import { NumberFilterBuilder } from "../../field-builders/number-filter.builder.js";
+import { StringFilterBuilder } from "../../field-builders/string-filter.builder.js";
+import { DateFilterBuilder } from "../../field-builders/date-filter.builder.js";
+import { WhereCondition } from "../../../sqb/kadmium-sqb.js";
+import { AggregateField } from "../aggregate.js";
+import { SelectableField } from "../selectable.js";
 import {
   PUBLIC_TYPE_SYMBOL,
   IS_QUERY_BUILDER,
   RELATIONS_SYMBOL,
-} from "../../symbols";
-import { KadmiumSqb } from "../../../sqb/kadmium-sqb";
-import { BaseFilterBuilder } from "../../field-builders/base-filter.builder";
-import { KadmiumRepo } from "../../repo";
-import { IRelationBuilder } from "../../field-builders/relation-builder";
-import { RelationsOf, ToManyRelation, ToOneRelation } from "../relations";
+} from "../../symbols.js";
+import { KadmiumSqb } from "../../../sqb/kadmium-sqb.js";
+import { BaseFilterBuilder } from "../../field-builders/base-filter.builder.js";
+import { KadmiumRepo } from "../../repo.js";
+import { IRelationBuilder } from "../../field-builders/relation-builder.js";
+import { RelationsOf, ToManyRelation, ToOneRelation } from "../relations.js";
 
 // --- COMPARABLE TYPES ---
 

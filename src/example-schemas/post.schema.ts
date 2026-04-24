@@ -8,9 +8,9 @@ import {
   datetime,
   sections as s,
   action,
-} from "../schema";
-import { AuditFeature } from "../features/audit.feature";
-import { RevisionsFeature } from "../features/revisions.feature";
+} from "../schema/index.js";
+import { AuditFeature } from "../features/audit.feature.js";
+import { RevisionsFeature } from "../features/revisions.feature.js";
 
 // 1. Define the schema object for a blog post.
 export const postSchema = schema({

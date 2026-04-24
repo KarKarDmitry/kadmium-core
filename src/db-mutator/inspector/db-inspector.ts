@@ -1,5 +1,5 @@
-import { DbDdlAdapter } from "../../sqb/adapters/adapter";
-import { DbSchema } from "../types";
+import { DbDdlAdapter } from "../../sqb/adapters/adapter.js";
+import { DbSchema } from "../types/index.js";
 
 /**
  * Inspects the actual database schema via DbDdlAdapter.

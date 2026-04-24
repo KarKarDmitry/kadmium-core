@@ -1,7 +1,7 @@
-import { AnyModel } from "../../model/model";
-import { WhereCondition } from "../../sqb/kadmium-sqb";
-import { BaseFilterBuilder } from "./base-filter.builder";
-import { Comparable } from "../types/query";
+import { AnyModel } from "../../model/model.js";
+import { WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { BaseFilterBuilder } from "./base-filter.builder.js";
+import { Comparable } from "../types/query/index.js";
 
 export class BooleanFilterBuilder<
 	T extends AnyModel,

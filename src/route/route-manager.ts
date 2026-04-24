@@ -1,10 +1,10 @@
-import { AnyModel } from "../model/model";
-import { AppCore } from "../core/app-core";
-import { RepoManager } from "../repo/repo-manager";
-import { ControllerInstance } from "../controller/types/controller";
-import { ControllerCore } from "../controller/engine/controller-core";
-import { IRouteAdapter } from "./types/adapter";
-import { RouteDefinition } from "./types/route";
+import { AnyModel } from "../model/model.js";
+import { AppCore } from "../core/app-core.js";
+import { RepoManager } from "../repo/repo-manager.js";
+import { ControllerInstance } from "../controller/types/controller.js";
+import { ControllerCore } from "../controller/engine/controller-core.js";
+import { IRouteAdapter } from "./types/adapter.js";
+import { RouteDefinition } from "./types/route.js";
 
 /**
  * Manages controller registration and connects them to a route adapter.

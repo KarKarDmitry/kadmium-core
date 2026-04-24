@@ -1,5 +1,5 @@
-import { KadmiumFeature, FeatureHooks } from "./types/base.feature";
-import { HookContext } from "./types";
+import { KadmiumFeature, FeatureHooks } from "./types/base.feature.js";
+import { HookContext } from "./types/index.js";
 import {
 	schema,
 	form,
@@ -9,11 +9,12 @@ import {
 	primary,
 	jsonb,
 	sections as s,
-} from "../schema";
-import { controller, get } from "../controller/init";
-import { ControllerInstance } from "../controller/types/controller";
-import { ControllerContext } from "../route/types/context";
-import { FeatureModel } from "../model/types";
+} from "../schema/index.js";
+import { controller, get } from "../controller/init.js";
+import { ControllerInstance } from "../controller/types/controller.js";
+import { ControllerContext } from "../route/types/context.js";
+import { FeatureModel } from "../model/types.js";
+import { SchemaCore } from "../core/schema-core.js";
 
 /**
  * Revision — модель ревизий, определяемая вручную разработчиком.
@@ -115,7 +116,7 @@ export class RevisionsFeature extends KadmiumFeature<Revision> {
 	 */
 	static readonly registeredSchemas = new Set<string>();
 
-	constructor(protected core: import("../core/schema-core").SchemaCore) {
+	constructor(protected core: SchemaCore) {
 		super(core);
 		RevisionsFeature.registeredSchemas.add(core.collection);
 	}

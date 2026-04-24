@@ -1,5 +1,5 @@
-import { BaseAction_OPT, SectionActions_OPT } from "./actions";
-import { Field_OPT } from "./fields";
+import { BaseAction_OPT, SectionActions_OPT } from "./actions.js";
+import { Field_OPT } from "./fields.js";
 
 export interface BaseSection_OPT {
 	_meta: "section";

@@ -1,4 +1,4 @@
-import { KadmiumSqb, WhereCondition, WhereGroup } from "../../sqb/kadmium-sqb";
+import { KadmiumSqb, WhereCondition, WhereGroup } from "../../sqb/kadmium-sqb.js";
 
 export abstract class BaseWhereBuilder<
   TProxy,

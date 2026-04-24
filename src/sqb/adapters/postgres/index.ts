@@ -8,15 +8,15 @@
  */
 
 import { Pool, PoolClient } from "pg";
-import { AnyModel } from "../../../model/model";
-import { DbAdapterConfig } from "../../types/config";
-import { KadmiumSqb } from "../../kadmium-sqb";
-import { DbAdapter, TransactionalDbAdapter } from "../adapter";
-import { Profiler } from "../../../core/profiling/profiler";
-import { PostgresDdlAdapter } from "./ddl.adapter";
-import { SqlGenerator } from "./sql-generator";
-import { ResultReshaper } from "./result-reshaper";
-import { Errors } from "../../../core/errors";
+import { AnyModel } from "../../../model/model.js";
+import { DbAdapterConfig } from "../../types/config.js";
+import { KadmiumSqb } from "../../kadmium-sqb.js";
+import { DbAdapter, TransactionalDbAdapter } from "../adapter.js";
+import { Profiler } from "../../../core/profiling/profiler.js";
+import { PostgresDdlAdapter } from "./ddl.adapter.js";
+import { SqlGenerator } from "./sql-generator.js";
+import { ResultReshaper } from "./result-reshaper.js";
+import { Errors } from "../../../core/errors.js";
 
 // ═══ Transactional Adapter ═══
 

@@ -1,11 +1,11 @@
-import { AnyModel } from "../../model/model";
-import { ModelHooks } from "../../model/types";
-import { AppCore } from "../../core/app-core";
-import { SchemaCore } from "../../core/schema-core";
-import { DbAdapter } from "../../sqb/adapters/adapter";
-import { Profiler } from "../../core/profiling/profiler";
-import { KadmiumRepo } from "../repo";
-import { IS_QUERY_BUILDER } from "../symbols";
+import { AnyModel } from "../../model/model.js";
+import { ModelHooks } from "../../model/types.js";
+import { AppCore } from "../../core/app-core.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { DbAdapter } from "../../sqb/adapters/adapter.js";
+import { Profiler } from "../../core/profiling/profiler.js";
+import { KadmiumRepo } from "../repo.js";
+import { IS_QUERY_BUILDER } from "../symbols.js";
 import {
   AggregateFunctions,
   AnySelectable,
@@ -19,22 +19,22 @@ import {
   IQueryBuilder,
   ISingleTableQuery,
   Public,
-} from "../types/query";
-import { AggregateField } from "../types/aggregate";
+} from "../types/query/index.js";
+import { AggregateField } from "../types/aggregate.js";
 import {
   IRelationBuilder,
   RelationProxy,
   ToManyRelationBuilder,
   ToOneRelationBuilder,
-} from "../field-builders/relation-builder";
-import { RelationsOf } from "../types/relations";
-import { SelectableField } from "../types/selectable";
-import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb";
-import { BaseQueryBuilder, toSqlString } from "./base-query.builder";
-import { createFilterProxy } from "../utils/filter-proxy";
-import { resolveInclude } from "../utils/include-resolver";
-import { aggregates } from "../utils/aggregates";
-import { Errors } from "../../core/errors";
+} from "../field-builders/relation-builder.js";
+import { RelationsOf } from "../types/relations.js";
+import { SelectableField } from "../types/selectable.js";
+import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { BaseQueryBuilder, toSqlString } from "./base-query.builder.js";
+import { createFilterProxy } from "../utils/filter-proxy.js";
+import { resolveInclude } from "../utils/include-resolver.js";
+import { aggregates } from "../utils/aggregates.js";
+import { Errors } from "../../core/errors.js";
 
 type SingleQuerySelectProxy<T extends AnyModel> = {
   [K in keyof T]: SelectableField<T, K>;

@@ -1,14 +1,14 @@
 import { randomUUID } from "crypto";
-import { AnyModel } from "../model/model";
-import { AppCore } from "../core/app-core";
-import { SchemaCore } from "../core/schema-core";
-import { DbAdapter, TransactionalDbAdapter } from "../sqb/adapters/adapter";
-import { WhereCondition } from "../sqb/kadmium-sqb";
-import { QueryBuilder } from "./builders/builder.single-query";
-import { SelectableField } from "./types/selectable";
-import { HookRepo } from "../features/types";
-import { ModelHook, ModelHookContext, ModelHooks } from "../model/types";
-import { Profiler } from "../core/profiling/profiler";
+import { AnyModel } from "../model/model.js";
+import { AppCore } from "../core/app-core.js";
+import { SchemaCore } from "../core/schema-core.js";
+import { DbAdapter, TransactionalDbAdapter } from "../sqb/adapters/adapter.js";
+import { WhereCondition } from "../sqb/kadmium-sqb.js";
+import { QueryBuilder } from "./builders/builder.single-query.js";
+import { SelectableField } from "./types/selectable.js";
+import { HookRepo } from "../features/types/index.js";
+import { ModelHook, ModelHookContext, ModelHooks } from "../model/types.js";
+import { Profiler } from "../core/profiling/profiler.js";
 import {
 	AnySelectable,
 	FilterProxy,
@@ -20,15 +20,15 @@ import {
 	Public,
 	AggregateFunctions,
 	IncludeResult,
-} from "./types/query";
+} from "./types/query/index.js";
 import * as bcrypt from "bcrypt";
 import {
 	IRelationBuilder,
 	RelationProxy,
-} from "./field-builders/relation-builder";
-import { RepoManager } from "./repo-manager";
-import { HookContext } from "../features/types";
-import { Errors } from "../core/errors";
+} from "./field-builders/relation-builder.js";
+import { RepoManager } from "./repo-manager.js";
+import { HookContext } from "../features/types/index.js";
+import { Errors } from "../core/errors.js";
 
 export class KadmiumRepo<T extends AnyModel> {
 	private passwordFieldNames: string[];
@@ -383,9 +383,7 @@ export class KadmiumRepo<T extends AnyModel> {
 	/**
 	 * Запускает beforeRead хуки и возвращает накопленные where-условия.
 	 */
-	public async _runFeatureBeforeRead(alias?: string): Promise<
-		import("../sqb/kadmium-sqb").WhereCondition[]
-	> {
+	public async _runFeatureBeforeRead(alias?: string): Promise<readonly WhereCondition[]> {
 		const ctx = new HookContext<T>(
 			"read",
 			this._createHookRepo(),
@@ -400,7 +398,7 @@ export class KadmiumRepo<T extends AnyModel> {
 			}
 		}
 
-		return ctx.getWheres() as import("../sqb/kadmium-sqb").WhereCondition[];
+		return ctx.getWheres();
 	}
 
 	/**
@@ -507,9 +505,9 @@ export class KadmiumRepo<T extends AnyModel> {
 	public first<const S extends readonly AnySelectable[]>(
 		selectorOrOptions?:
 			| ((
-					fields: { [K in keyof T]: SelectableField<T, K> },
-					aggregates: AggregateFunctions,
-			  ) => S)
+				fields: { [K in keyof T]: SelectableField<T, K> },
+				aggregates: AggregateFunctions,
+			) => S)
 			| { includeSecured?: boolean },
 		options?: { includeSecured?: boolean },
 	) {
@@ -643,9 +641,9 @@ export class KadmiumRepo<T extends AnyModel> {
 	>(
 		selectorOrOptions?:
 			| ((
-					fields: { [K in keyof T]: SelectableField<T, K> },
-					aggregates: AggregateFunctions,
-			  ) => S)
+				fields: { [K in keyof T]: SelectableField<T, K> },
+				aggregates: AggregateFunctions,
+			) => S)
 			| { includeSecured?: boolean },
 		options?: { includeSecured?: boolean },
 	) {
@@ -694,7 +692,7 @@ export class KadmiumRepo<T extends AnyModel> {
 		try {
 			// Initialize RepoManager BEFORE creating txContext to avoid ! assertion
 			const txRepoManager = new RepoManager(this._appCore, txAdapter);
-			
+
 			const txContext: ITransaction = {
 				get: <U extends AnyModel>(type: new () => U) =>
 					txRepoManager.get(type),

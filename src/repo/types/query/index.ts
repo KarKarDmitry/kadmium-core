@@ -1,3 +1,3 @@
-export * from "./common";
-export * from "./single";
-export * from "./multi";
+export * from "./common.js";
+export * from "./single.js";
+export * from "./multi.js";

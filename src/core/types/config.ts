@@ -1,6 +1,6 @@
-import { DbAdapter } from "../../sqb/adapters/adapter";
-import { DbAdapterConfig } from "../../sqb/types/config";
-import { ValidationAdapter } from "../../validation/types/adapter";
+import { DbAdapter } from "../../sqb/adapters/adapter.js";
+import { DbAdapterConfig } from "../../sqb/types/config.js";
+import { ValidationAdapter } from "../../validation/types/adapter.js";
 
 export interface AppConfig {
   host: string;
@@ -21,13 +21,20 @@ export interface ClusterNodeConfig {
 /**
  * Конфигурация генератора моделей.
  */
+// src/gen/types.ts (или где у тебя определён GenConfig)
 export interface GenConfig {
   /**
-   * Базовая папка для вывода моделей.
+   * Папка для вывода сгенерированных моделей.
    * По умолчанию: "models" → src/models/
-   * Пример: "src/domain/models"
    */
   models_output?: string;
+
+  /**
+   * Базовый путь для импорта системных классов Kadmium (Model, ModelConfig и т.п.).
+   * Обычно это имя npm-пакета, например: "@karkardmitry/kadmium-core".
+   * Если не указан, используется значение по умолчанию: "@karkardmitry/kadmium-core".
+   */
+  importBase?: string;
 }
 
 export type AdapterRegistry = {

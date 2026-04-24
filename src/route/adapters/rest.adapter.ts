@@ -1,7 +1,7 @@
-import express = require("express");
-import { IRouteAdapter } from "../types/adapter";
-import { RouteDefinition } from "../types/route";
-import { Errors } from "../../core/errors";
+import express from 'express'
+import { IRouteAdapter } from "../types/adapter.js";
+import { RouteDefinition } from "../types/route.js";
+import { Errors } from "../../core/errors.js";
 
 /**
  * Express.js implementation of IRouteAdapter.

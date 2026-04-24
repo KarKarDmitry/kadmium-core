@@ -4,7 +4,7 @@ import {
   FormAction_OPT,
   HrefAction_OPT,
   SectionActions_OPT,
-} from "./types/actions";
+} from "./types/actions.js";
 import {
   Field_OPT,
   String_OPT,
@@ -23,9 +23,9 @@ import {
   Password_OPT,
   Email_OPT,
   Primary_OPT,
-} from "./types/fields";
-import { Form_OPT } from "./types/form";
-import { Schema_OPT } from "./types/schema";
+} from "./types/fields.js";
+import { Form_OPT } from "./types/form.js";
+import { Schema_OPT } from "./types/schema.js";
 import {
   Accordion_OPT,
   Block_OPT,
@@ -35,10 +35,10 @@ import {
   Section_OPT,
   Table_OPT,
   Tabs_OPT,
-} from "./types/sections";
-import { KadmiumFeature } from "../features/types/base.feature";
-import { SchemaCore } from "../core/schema-core";
-import { FeatureModel } from "../model/types";
+} from "./types/sections.js";
+import { KadmiumFeature } from "../features/types/base.feature.js";
+import { SchemaCore } from "../core/schema-core.js";
+import { FeatureModel } from "../model/types.js";
 
 export function schema(opt: {
   collection: string;

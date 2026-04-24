@@ -1,7 +1,7 @@
-import { AnyModel } from "../../model/model";
-import { KadmiumSqb } from "../../sqb/kadmium-sqb";
-import { Errors } from "../../core/errors";
-import { BaseFilterBuilder } from "./base-filter.builder";
+import { AnyModel } from "../../model/model.js";
+import { KadmiumSqb } from "../../sqb/kadmium-sqb.js";
+import { Errors } from "../../core/errors.js";
+import { BaseFilterBuilder } from "./base-filter.builder.js";
 
 /**
  * A concrete implementation of BaseFilterBuilder used specifically to reference

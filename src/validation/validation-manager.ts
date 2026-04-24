@@ -1,4 +1,4 @@
-import { AppCore } from "../core/app-core";
+import { AppCore } from "../core/app-core.js";
 
 /**
  * Manages validation-related concerns for the application.

@@ -1,7 +1,7 @@
-import { AnyModel } from "../../../model/model";
-import { WhereCondition } from "../../../sqb/kadmium-sqb";
-import { AggregateField } from "../aggregate";
-import { SelectableField } from "../selectable";
+import { AnyModel } from "../../../model/model.js";
+import { WhereCondition } from "../../../sqb/kadmium-sqb.js";
+import { AggregateField } from "../aggregate.js";
+import { SelectableField } from "../selectable.js";
 import {
   AnySelectable,
   FilterProxy,
@@ -10,8 +10,8 @@ import {
   BuildIncludedResult,
   UnionToIntersection,
   FilterByParentAlias,
-} from "./common";
-import { IRelationBuilder } from "../../field-builders/relation-builder";
+} from "./common.js";
+import { IRelationBuilder } from "../../field-builders/relation-builder.js";
 
 // --- MULTI-QUERY TYPES ---
 

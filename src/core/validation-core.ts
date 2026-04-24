@@ -1,12 +1,12 @@
-import { SchemaRegistry } from "./schema-core";
-import { FieldValidator } from "../validation/engine/field-validator";
-import { ModelValidationRule } from "../model/types";
+import { SchemaRegistry } from "./schema-core.js";
+import { FieldValidator } from "../validation/engine/field-validator.js";
+import { ModelValidationRule } from "../model/types.js";
 import {
 	ValidationAdapter,
 	ValidationResult,
 	ValidationError,
-} from "../validation/types/adapter";
-import { ValField } from "../validation/val-struct";
+} from "../validation/types/adapter.js";
+import { ValField } from "../validation/val-struct.js";
 
 export type ValidationMode = "strict" | "strip" | "passthrough";
 

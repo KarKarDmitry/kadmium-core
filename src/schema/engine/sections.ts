@@ -1,11 +1,11 @@
-import { SectionActions_OPT } from "../types/actions";
-import { Field_OPT, NormalizedField_OPT } from "../types/fields";
+import { SectionActions_OPT } from "../types/actions.js";
+import { Field_OPT, NormalizedField_OPT } from "../types/fields.js";
 import {
 	BaseSection_OPT,
 	FieldHandler,
 	NormalizedSection_OPT,
 	Section_OPT,
-} from "../types/sections";
+} from "../types/sections.js";
 
 export function getNormalizedSections(
 	sections: Section_OPT[],

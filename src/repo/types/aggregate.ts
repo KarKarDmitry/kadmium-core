@@ -1,4 +1,4 @@
-import { SelectableField } from "./selectable";
+import { SelectableField } from "./selectable.js";
 
 /**
  * Represents an aggregate function call within a select statement.

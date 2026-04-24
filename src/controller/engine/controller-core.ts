@@ -1,13 +1,13 @@
-import { AnyModel } from "../../model/model";
-import { AppCore } from "../../core/app-core";
-import { SchemaCore } from "../../core/schema-core";
-import { KadmiumRepo } from "../../repo/repo";
-import { RepoManager } from "../../repo/repo-manager";
-import { ControllerContext, RequestData } from "../../route/types/context";
-import { ControllerInstance } from "../types/controller";
-import { RouteDefinition, ValidatedRequest } from "../../route/types/route";
-import { compileValStruct } from "../../validation/val-struct";
-import { Errors } from "../../core/errors";
+import { AnyModel } from "../../model/model.js";
+import { AppCore } from "../../core/app-core.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { KadmiumRepo } from "../../repo/repo.js";
+import { RepoManager } from "../../repo/repo-manager.js";
+import { ControllerContext, RequestData } from "../../route/types/context.js";
+import { ControllerInstance } from "../types/controller.js";
+import { RouteDefinition, ValidatedRequest } from "../../route/types/route.js";
+import { compileValStruct } from "../../validation/val-struct.js";
+import { Errors } from "../../core/errors.js";
 
 /**
  * Internal representation of a registered controller.

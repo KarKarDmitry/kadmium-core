@@ -1,6 +1,6 @@
-import { AnyModel } from "../../model/model";
-import { ControllerContext } from "./context";
-import { RouteDefinition } from "./route";
+import { AnyModel } from "../../model/model.js";
+import { ControllerContext } from "./context.js";
+import { RouteDefinition } from "./route.js";
 
 /**
  * Interface that all route adapters must implement.

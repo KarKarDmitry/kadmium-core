@@ -1,6 +1,6 @@
-import { IS_FILTER_BUILDER } from "../symbols";
-import { WhereCondition } from "../../sqb/kadmium-sqb";
-import { BaseFilterBuilder } from "./base-filter.builder";
+import { IS_FILTER_BUILDER } from "../symbols.js";
+import { WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { BaseFilterBuilder } from "./base-filter.builder.js";
 
 // This is a common TypeScript pattern for mixins.
 // It defines a generic type for a class constructor.

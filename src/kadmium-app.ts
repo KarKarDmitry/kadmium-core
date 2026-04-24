@@ -1,10 +1,10 @@
-import { AppCore } from "./core/app-core";
-import { Errors } from "./core/errors";
-import { RepoManager } from "./repo/repo-manager";
-import { ValidationManager } from "./validation/validation-manager";
-import { RouteManager } from "./route/route-manager";
-import { DbAdapter } from "./sqb/adapters/adapter";
-import { Schema } from "./schema/engine/schema";
+import { AppCore } from "./core/app-core.js";
+import { Errors } from "./core/errors.js";
+import { RepoManager } from "./repo/repo-manager.js";
+import { ValidationManager } from "./validation/validation-manager.js";
+import { RouteManager } from "./route/route-manager.js";
+import { DbAdapter } from "./sqb/adapters/adapter.js";
+import { Schema } from "./schema/engine/schema.js";
 import { globSync } from "glob";
 import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
@@ -13,19 +13,20 @@ import {
   AppConfig,
   ClusterNodeConfig,
   GenConfig,
-} from "./core/types/config";
+} from "./core/types/config.js";
 
 import { plural, singular } from "pluralize"; // Импортируем pluralize
-import { RelationMetadata } from "./repo/types/relations";
-import { Ref_OPT } from "./schema/types/fields";
-import { DbConfig, DbAdapterConfig } from "./sqb/types/config";
-import { ControllerInstance } from "./controller/types/controller";
-import { IRouteAdapter } from "./route/types/adapter";
-import { DbMutator } from "./db-mutator/db-mutator";
-import { HealthCheckResult } from "./db-mutator/types";
-import { AuthClient, AuthServiceConfig } from "./auth/auth-client";
+import { RelationMetadata } from "./repo/types/relations.js";
+import { Ref_OPT } from "./schema/types/fields.js";
+import { DbConfig, DbAdapterConfig } from "./sqb/types/config.js";
+import { ControllerInstance } from "./controller/types/controller.js";
+import { IRouteAdapter } from "./route/types/adapter.js";
+import { DbMutator } from "./db-mutator/db-mutator.js";
+import { HealthCheckResult } from "./db-mutator/types/index.js";
+import { AuthClient, AuthServiceConfig } from "./auth/auth-client.js";
+import path from "node:path";
 
-type InitialConfig = {
+export type KadmiumConfig = {
   adapters?: Partial<AdapterRegistry>;
   app?: Partial<AppConfig>;
   db?: Partial<DbConfig>;
@@ -51,7 +52,7 @@ export class KadmiumApp {
   private dbAdapter: DbAdapter;
   private dbMutator?: DbMutator;
 
-  constructor(config?: InitialConfig) {
+  constructor(config?: KadmiumConfig) {
     this.appCore = new AppCore();
 
     if (config) {
@@ -77,7 +78,7 @@ export class KadmiumApp {
     }
   }
 
-  public configure(config: InitialConfig): void {
+  public configure(config: KadmiumConfig): void {
     this.appCore.configure(config);
 
     if (!this.appCore.adapters.db) {
@@ -105,6 +106,27 @@ export class KadmiumApp {
       this.Auth = new AuthClient(this.appCore, config.auth);
     } else if (!this.appCore.app.use_auth) {
       this.Auth = undefined;
+    }
+  }
+
+  public async setConfig(configPath?: string) {
+    const targetPath = configPath
+      ? path.resolve(configPath)
+      : path.join(process.cwd(), 'kadmium.config.ts');
+
+    console.log(`[Kadmium] Loading config from ${targetPath}`);
+    try {
+      const configModule = await this._loadModule(targetPath);
+      // Модуль может экспортировать default или именованный экспорт
+      const config = (configModule as any).default ?? configModule;
+      if (typeof config !== 'object' || config === null) {
+        throw new Error('Config file must export a configuration object.');
+      }
+      this.configure(config as KadmiumConfig);
+      console.log(`[Kadmium] Config loaded successfully.`);
+    } catch (err) {
+      console.error(`[Kadmium] Failed to load config from ${targetPath}:`, err);
+      throw err; // Генератор должен упасть, если конфиг критичен
     }
   }
 

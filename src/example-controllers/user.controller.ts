@@ -1,6 +1,6 @@
-import { controller, get, post, put, del } from "../controller/init";
-import { User } from "../models/schemas/User";
-import { v } from "../validation";
+import { controller, get, post, put, del } from "../controller/init.js";
+import { User } from "../models/schemas/User.js";
+import { v } from "../validation/index.js";
 
 export default controller(User, [
 	get("/users", async (ctx) => {

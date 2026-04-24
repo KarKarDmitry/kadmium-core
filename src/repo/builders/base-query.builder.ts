@@ -1,7 +1,7 @@
-import { SelectableField } from "../types/selectable";
-import { BaseWhereBuilder } from "../types/builder.base";
-import { KadmiumSqb, WhereGroup } from "../../sqb/kadmium-sqb";
-import { DbAdapter } from "../../sqb/adapters/adapter";
+import { SelectableField } from "../types/selectable.js";
+import { BaseWhereBuilder } from "../types/builder.base.js";
+import { KadmiumSqb, WhereGroup } from "../../sqb/kadmium-sqb.js";
+import { DbAdapter } from "../../sqb/adapters/adapter.js";
 
 /**
  * Formats a KadmiumSqb instance into a human-readable SQL string with parameters.

@@ -1,4 +1,4 @@
-import { NormalizedInputField_OPT } from "../../schema/types/fields";
+import { NormalizedInputField_OPT } from "../../schema/types/fields.js";
 
 export interface FieldValidationError {
 	field: string;

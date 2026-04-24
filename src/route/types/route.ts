@@ -1,9 +1,10 @@
-import { AnyModel } from "../../model/model";
-import { RouteHandler, RouteMiddleware } from "./adapter";
+import { AnyModel } from "../../model/model.js";
+import { RouteHandler, RouteMiddleware } from "./adapter.js";
 import {
 	FieldValidator,
 	ObjectValidator,
-} from "../../validation/val-struct";
+} from "../../validation/index.js";
+import { ControllerContext } from "./context.js";
 
 type ValSchema = Record<string, FieldValidator<any> | ObjectValidator<any>>;
 
@@ -82,7 +83,7 @@ export interface RouteDefinition<
 	path: string;
 	/** The route handler function */
 	handler: (
-		ctx: import("./context").ControllerContext<T>,
+		ctx: ControllerContext<T>,
 		req: ValidatedRequest<P, Q, B>,
 	) => Promise<any> | any;
 	/** Optional execution options */

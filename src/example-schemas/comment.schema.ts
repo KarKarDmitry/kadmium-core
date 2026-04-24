@@ -5,8 +5,8 @@ import {
 	ref,
 	string,
 	sections as s,
-} from "../schema";
-import { SoftDeleteFeature } from "../features/soft-delete.feature";
+} from "../schema/index.js";
+import { SoftDeleteFeature } from "../features/soft-delete.feature.js";
 
 export const commentSchema = schema({
 	collection: "comment",

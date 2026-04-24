@@ -1,17 +1,17 @@
-import { ZodValidationAdapter } from "../validation";
-import { SchemaCore } from "./schema-core";
+import { ZodValidationAdapter } from "../validation/index.js";
+import { SchemaCore } from "./schema-core.js";
 
-import { NodePostgresAdapter } from "../sqb/adapters/postgres";
-import { InputField_OPT } from "../schema/types/fields";
+import { NodePostgresAdapter } from "../sqb/adapters/postgres/index.js";
+import { InputField_OPT } from "../schema/types/fields.js";
 
 import {
   AppConfig,
   ClusterNodeConfig,
   AdapterRegistry,
   GenConfig,
-} from "./types/config";
-import { DbConfig } from "../sqb/types/config";
-import { RelationMetadata } from "../repo/types/relations"; // Импортируем RelationMetadata
+} from "./types/config.js";
+import { DbConfig } from "../sqb/types/config.js";
+import { RelationMetadata } from "../repo/types/relations.js"; // Импортируем RelationMetadata
 
 // --- AppCore Class ---
 

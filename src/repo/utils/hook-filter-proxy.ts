@@ -1,7 +1,7 @@
-import { AnyModel } from "../../model/model";
-import { SchemaCore } from "../../core/schema-core";
-import { WhereCondition } from "../../sqb/kadmium-sqb";
-import { Ref_OPT } from "../../schema/types/fields";
+import { AnyModel } from "../../model/model.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { Ref_OPT } from "../../schema/types/fields.js";
 
 /**
  * Типобезопасный helper для HookContext.where().

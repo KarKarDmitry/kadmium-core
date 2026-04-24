@@ -1,6 +1,6 @@
-import { controller, get, post, put, del } from "../controller/init";
-import { Post } from "../models/schemas/Post";
-import { v } from "../validation";
+import { controller, get, post, put, del } from "../controller/init.js";
+import { Post } from "../models/schemas/Post.js";
+import { v } from "../validation/index.js";
 
 export default controller(Post, [
 	get("/posts", async (ctx) => {
@@ -19,10 +19,10 @@ export default controller(Post, [
 		},
 		async (ctx, req) => {
 			const post = await ctx.repo
+				.where((e) => e.id.eq(req.params.id))
 				.include((r) => [
 					r.author.select((f) => [f.id, f.first_name, f.last_name]),
 				])
-				.where((e) => e.id.eq(req.params.id))
 				.first()
 				.go();
 			if (!post) throw new Error("Post not found");

@@ -1,4 +1,4 @@
-import { AnyModel } from "../../model/model";
+import { AnyModel } from "../../model/model.js";
 
 export class SelectableField<
   TOrigin extends AnyModel,

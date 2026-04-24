@@ -1,12 +1,12 @@
 // src/schema/engine/schema.ts
 
-import { SchemaCore } from "../../core/schema-core";
-import { Form_OPT } from "../types/form";
-import { Primary_OPT } from "../types/fields";
-import { Schema_OPT } from "../types/schema";
-import { KadmiumFeature } from "../../features/types/base.feature";
-import { FeatureModel } from "../../model/types";
-import { Errors } from "../../core/errors";
+import { SchemaCore } from "../../core/schema-core.js";
+import { Form_OPT } from "../types/form.js";
+import { Primary_OPT } from "../types/fields.js";
+import { Schema_OPT } from "../types/schema.js";
+import { KadmiumFeature } from "../../features/types/base.feature.js";
+import { FeatureModel } from "../../model/types.js";
+import { Errors } from "../../core/errors.js";
 
 export class Schema implements Schema_OPT {
   public readonly _meta: "schema" = "schema";

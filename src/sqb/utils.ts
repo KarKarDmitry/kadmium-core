@@ -1,4 +1,4 @@
-import { WhereGroup } from "./kadmium-sqb";
+import { WhereGroup } from "./kadmium-sqb.js";
 
 /**
  * Deep clones a WhereGroup while preserving objects with Symbol properties

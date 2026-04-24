@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import type { AppCore } from '../core/app-core';
-import type { AuthClient } from './auth-client';
+import type { AppCore } from '../core/app-core.js';
+import type { AuthClient } from './auth-client.js';
 
 export interface AuthMiddlewareOptions {
   requireAuth?: boolean;

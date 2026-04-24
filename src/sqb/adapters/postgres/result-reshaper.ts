@@ -3,8 +3,7 @@
  * в nested структуру для multi-table запросов.
  */
 
-import { SelectableField } from "../../../repo/types/selectable";
-import { AggregateField } from "../../../repo/types/aggregate";
+import { SelectableField, AggregateField } from "../../../repo/types/index.js";
 
 export class ResultReshaper {
 	static reshape(flatRows: any[], selects: any[], includes: any[]): any[] {

@@ -5,7 +5,7 @@ import {
 	ModelHooks,
 	ModelValidation,
 	ModelFeatureClass,
-} from "./types";
+} from "./types.js";
 
 export abstract class AnyModel {
 	_meta: "generated-schema" = "generated-schema";

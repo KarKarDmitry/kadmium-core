@@ -1,9 +1,9 @@
-import { SchemaCore } from "../../core/schema-core";
-import { HookContext, SchemaAmendment } from ".";
-import { ControllerInstance } from "../../controller/types/controller";
-import { Schema_OPT } from "../../schema/types/schema";
-import { FeatureModel } from "../../model/types";
-import { AnyModel } from "../../model/model";
+import { SchemaCore } from "../../core/schema-core.js";
+import { HookContext, SchemaAmendment } from "./index.js";
+import { ControllerInstance } from "../../controller/types/controller.js";
+import { Schema_OPT } from "../../schema/types/schema.js";
+import { FeatureModel } from "../../model/types.js";
+import { AnyModel } from "../../model/model.js";
 
 /**
  * Хук-функция (before-операции).

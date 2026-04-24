@@ -1,15 +1,15 @@
-import { AnyModel } from "../../model/model";
-import { AppCore } from "../../core/app-core";
-import { SchemaCore } from "../../core/schema-core";
-import { KadmiumSqb } from "../../sqb/kadmium-sqb";
-import { FilterProxy } from "../types/query";
-import { Ref_OPT } from "../../schema/types/fields";
-import { BaseFilterBuilder } from "../field-builders/base-filter.builder";
-import { NullableMixin } from "../field-builders/nullable.mixin";
-import { BooleanFilterBuilder } from "../field-builders/boolean-filter.builder";
-import { DateFilterBuilder } from "../field-builders/date-filter.builder";
-import { NumberFilterBuilder } from "../field-builders/number-filter.builder";
-import { StringFilterBuilder } from "../field-builders/string-filter.builder";
+import { AnyModel } from "../../model/model.js";
+import { AppCore } from "../../core/app-core.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { KadmiumSqb } from "../../sqb/kadmium-sqb.js";
+import { FilterProxy } from "../types/query/index.js";
+import { Ref_OPT } from "../../schema/types/fields.js";
+import { BaseFilterBuilder } from "../field-builders/base-filter.builder.js";
+import { NullableMixin } from "../field-builders/nullable.mixin.js";
+import { BooleanFilterBuilder } from "../field-builders/boolean-filter.builder.js";
+import { DateFilterBuilder } from "../field-builders/date-filter.builder.js";
+import { NumberFilterBuilder } from "../field-builders/number-filter.builder.js";
+import { StringFilterBuilder } from "../field-builders/string-filter.builder.js";
 
 /**
  * Determines the correct filter builder class for a field definition.

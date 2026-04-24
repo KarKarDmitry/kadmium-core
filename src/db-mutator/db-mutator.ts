@@ -1,9 +1,9 @@
-import { AppCore } from "../core/app-core";
-import { DbAdapter, DbDdlAdapter, TransactionalDbAdapter } from "../sqb/adapters/adapter";
-import { DbInspector } from "./inspector/db-inspector";
-import { SchemaDiff } from "./diff/schema-diff";
-import { MigrationRunner } from "./generator/migration-runner";
-import { DbSchema, DiffResult, HealthCheckResult, CreateTableOp } from "./types";
+import { AppCore } from "../core/app-core.js";
+import { DbAdapter, DbDdlAdapter, TransactionalDbAdapter } from "../sqb/adapters/adapter.js";
+import { DbInspector } from "./inspector/db-inspector.js";
+import { SchemaDiff } from "./diff/schema-diff.js";
+import { MigrationRunner } from "./generator/migration-runner.js";
+import { DbSchema, DiffResult, HealthCheckResult, CreateTableOp } from "./types/index.js";
 
 /**
  * Facade for database schema management.

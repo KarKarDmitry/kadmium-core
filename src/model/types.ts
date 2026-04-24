@@ -1,11 +1,11 @@
 // src/model/types.ts
 
-import { AnyModel } from "./model";
-import { SchemaCore } from "../core/schema-core";
-import { KadmiumRefinementCtx } from "../validation/types/refinement";
-import { WhereCondition } from "../sqb/kadmium-sqb";
-import { KadmiumRepo } from "../repo/repo";
-import { KadmiumFeature } from "../features/types/base.feature";
+import { AnyModel } from "./model.js";
+import { SchemaCore } from "../core/schema-core.js";
+import { KadmiumRefinementCtx } from "../validation/types/refinement.js";
+import { WhereCondition } from "../sqb/kadmium-sqb.js";
+import { KadmiumRepo } from "../repo/repo.js";
+import { KadmiumFeature } from "../features/types/base.feature.js";
 
 // ─────────────────────────────────────────────
 // Model Hook Types
@@ -120,7 +120,7 @@ export type ModelFeatureClass = new (core: SchemaCore) => KadmiumFeature<any>;
 // FeatureModel Types
 // ─────────────────────────────────────────────
 
-import { Schema_OPT } from "../schema/types/schema";
+import { Schema_OPT } from "../schema/types/schema.js";
 
 /**
  * Конфигурация модели фичи.

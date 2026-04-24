@@ -1,20 +1,20 @@
-import { AnyModel } from "../../model/model";
-import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb";
+import { AnyModel } from "../../model/model.js";
+import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb.js";
 import {
   FilterProxy,
   IQueryBuilder,
   AnySelectable,
   AggregateFunctions,
-} from "../types/query";
-import { BaseWhereBuilder } from "../types/builder.base";
-import { SchemaCore } from "../../core/schema-core";
-import { SelectableField } from "../types/selectable";
-import { AppCore } from "../../core/app-core";
-import { createFilterProxy } from "../utils/filter-proxy";
-import { resolveInclude, updateWhereAlias, updateJoinAliases } from "../utils/include-resolver";
-import { IS_QUERY_BUILDER } from "../symbols";
-import { RelationsOf, ToManyRelation, ToOneRelation } from "../types/relations";
-import { Errors } from "../../core/errors";
+} from "../types/query/index.js";
+import { BaseWhereBuilder } from "../types/builder.base.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { SelectableField } from "../types/selectable.js";
+import { AppCore } from "../../core/app-core.js";
+import { createFilterProxy } from "../utils/filter-proxy.js";
+import { resolveInclude, updateWhereAlias, updateJoinAliases } from "../utils/include-resolver.js";
+import { IS_QUERY_BUILDER } from "../symbols.js";
+import { RelationsOf, ToManyRelation, ToOneRelation } from "../types/relations.js";
+import { Errors } from "../../core/errors.js";
 
 // This proxy provides access to related entities for the .include() method
 export type RelationProxy<

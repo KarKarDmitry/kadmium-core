@@ -10,7 +10,7 @@ import {
 	href,
 	primary,
 	ref,
-} from "../schema";
+} from "../schema/index.js";
 
 // 1. Define the schema object
 export const userSchema = schema({

@@ -1,6 +1,6 @@
-import { AggregateField } from "../types/aggregate";
-import { SelectableField } from "../types/selectable";
-import { AggregateFunctions } from "../types/query";
+import { AggregateField } from "../types/aggregate.js";
+import { SelectableField } from "../types/selectable.js";
+import { AggregateFunctions } from "../types/query/index.js";
 
 export const aggregates: AggregateFunctions = {
   count: (field) => new AggregateField("count", field),

@@ -1,26 +1,26 @@
 // src/core/schema-core.ts
 
-import { Schema } from "../schema/engine/schema";
-import { NormalizedSchema } from "../schema/types/schema";
-import { getNormalizedFields } from "../schema/engine/fields";
-import { getFormActions, getNormalizedActions } from "../schema/engine/actions";
-import { getNormalizedSections } from "../schema/engine/sections";
-import { NormalizedInputField_OPT } from "../schema/types/fields";
-import { NormalizedAction_OPT } from "../schema/types/actions";
-import { NormalizedSection_OPT } from "../schema/types/sections";
+import { Schema } from "../schema/engine/schema.js";
+import { NormalizedSchema } from "../schema/types/schema.js";
+import { getNormalizedFields } from "../schema/engine/fields.js";
+import { getFormActions, getNormalizedActions } from "../schema/engine/actions.js";
+import { getNormalizedSections } from "../schema/engine/sections.js";
+import { NormalizedInputField_OPT } from "../schema/types/fields.js";
+import { NormalizedAction_OPT } from "../schema/types/actions.js";
+import { NormalizedSection_OPT } from "../schema/types/sections.js";
 
 // validation core
-import { ValidationCore, ValidationMode } from "./validation-core";
-import { AppCore } from "./app-core";
-import { ValidationAdapter } from "../validation/types/adapter";
-import { FeatureModel, ModelValidationRule, ModelHooks } from "../model/types";
-import { AnyModel, Model } from "../model/model";
-import { Profiler } from "./profiling/profiler";
+import { ValidationCore, ValidationMode } from "./validation-core.js";
+import { AppCore } from "./app-core.js";
+import { ValidationAdapter } from "../validation/types/adapter.js";
+import { FeatureModel, ModelValidationRule, ModelHooks } from "../model/types.js";
+import { AnyModel, Model } from "../model/model.js";
+import { Profiler } from "./profiling/profiler.js";
 
 // features
-import { KadmiumFeature } from "../features/types/base.feature";
-import { SchemaAmendment } from "../features/types";
-import { Errors } from "./errors";
+import { KadmiumFeature } from "../features/types/base.feature.js";
+import { SchemaAmendment } from "../features/types/index.js";
+import { Errors } from "./errors.js";
 
 export interface SchemaRegistry {
 	fieldsByName: Map<string, NormalizedInputField_OPT>;

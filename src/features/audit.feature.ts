@@ -1,8 +1,8 @@
-import { KadmiumFeature, FeatureHooks } from "./types/base.feature";
-import { HookContext } from "./types";
-import { datetime } from "../schema";
-import { FeatureModel } from "../model/types";
-import { AnyModel, Model } from "../model/model";
+import { KadmiumFeature, FeatureHooks } from "./types/base.feature.js";
+import { HookContext } from "./types/index.js";
+import { datetime } from "../schema/index.js";
+import { FeatureModel } from "../model/types.js";
+import { AnyModel, Model } from "../model/model.js";
 
 
 abstract class AuditAmend extends Model {

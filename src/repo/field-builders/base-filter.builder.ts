@@ -1,6 +1,6 @@
-import { AnyModel } from "../../model/model";
-import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb";
-import { IS_FILTER_BUILDER } from "../symbols";
+import { AnyModel } from "../../model/model.js";
+import { KadmiumSqb, WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { IS_FILTER_BUILDER } from "../symbols.js";
 
 /**
  * The abstract base class for all field-specific filter builders.

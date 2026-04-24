@@ -1,4 +1,4 @@
-export { AuditFeature } from "./audit.feature";
-export { SoftDeleteFeature } from "./soft-delete.feature";
-export { RevisionsFeature } from "./revisions.feature";
-export { KadmiumFeature, HookContext, SchemaAmendment } from "./types";
+export { AuditFeature } from "./audit.feature.js";
+export { SoftDeleteFeature } from "./soft-delete.feature.js";
+export { RevisionsFeature } from "./revisions.feature.js";
+export { KadmiumFeature, HookContext, SchemaAmendment } from "./types/index.js";

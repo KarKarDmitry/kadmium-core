@@ -1,12 +1,12 @@
-import { AnyModel } from "../../model/model";
-import { KadmiumSqb } from "../kadmium-sqb";
+import { AnyModel } from "../../model/model.js";
+import { KadmiumSqb } from "../kadmium-sqb.js";
 import {
   DbColumn,
   DbForeignKey,
   DbIndex,
   DbSchema,
   DbTable,
-} from "../../db-mutator/types";
+} from "../../db-mutator/types/index.js";
 
 /**
  * DDL (Data Definition Language) adapter interface.

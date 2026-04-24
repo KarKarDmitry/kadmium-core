@@ -4,8 +4,8 @@ import {
 	DbForeignKey,
 	DbIndex,
 	DbTable,
-} from "../../../db-mutator/types";
-import { DbDdlAdapter } from "../adapter";
+} from "../../../db-mutator/index.js";
+import { DbDdlAdapter } from "../adapter.js";
 
 /**
  * Maps Kadmium field types to PostgreSQL column types.

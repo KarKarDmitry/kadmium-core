@@ -1,9 +1,9 @@
-import { AnyModel, Model } from "../../model/model";
-import { SchemaCore } from "../../core/schema-core";
-import { WhereCondition } from "../../sqb/kadmium-sqb";
-import { Errors } from "../../core/errors";
-import { KadmiumRepo } from "../../repo/repo";
-import { createHookFieldSelector, FieldSelector } from "../../repo/utils/hook-filter-proxy";
+import { AnyModel, Model } from "../../model/model.js";
+import { SchemaCore } from "../../core/schema-core.js";
+import { WhereCondition } from "../../sqb/kadmium-sqb.js";
+import { Errors } from "../../core/errors.js";
+import { KadmiumRepo } from "../../repo/repo.js";
+import { createHookFieldSelector, FieldSelector } from "../../repo/utils/hook-filter-proxy.js";
 
 /**
  * Ограниченный интерфейс репозитория, доступный в хуках.

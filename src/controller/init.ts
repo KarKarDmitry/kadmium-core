@@ -1,15 +1,15 @@
-import { AnyModel } from "../model/model";
-import { ControllerInstance } from "./types/controller";
+import { AnyModel } from "../model/model.js";
+import { ControllerInstance } from "./types/controller.js";
 import {
 	RouteDefinition,
-} from "../route/types/route";
-import type { RouteMiddleware } from "../route/types/adapter";
-import type { ControllerContext } from "../route/types/context";
+} from "../route/types/route.js";
+import type { RouteMiddleware } from "../route/types/adapter.js";
+import type { ControllerContext } from "../route/types/context.js";
 import {
 	FieldValidator,
 	ObjectValidator,
 	InferValStruct,
-} from "../validation/val-struct";
+} from "../validation/val-struct.js";
 
 type ValSchema = Record<string, FieldValidator<any> | ObjectValidator<any>>;
 

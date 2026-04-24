@@ -1,7 +1,7 @@
-import { AnyModel } from "../../model/model";
-import { KadmiumRepo } from "../../repo/repo";
-import { ValidationCore } from "../../core/validation-core";
-import { Errors } from "../../core/errors";
+import { AnyModel } from "../../model/model.js";
+import { KadmiumRepo } from "../../repo/repo.js";
+import { ValidationCore } from "../../core/validation-core.js";
+import { Errors } from "../../core/errors.js";
 
 /**
  * Wrapped request data extracted from the HTTP framework.

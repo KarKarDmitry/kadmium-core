@@ -1,7 +1,7 @@
-import { KadmiumFeature, FeatureHooks } from "./types/base.feature";
-import { HookContext } from "./types";
-import { datetime } from "../schema";
-import { AnyModel } from "../model/model";
+import { KadmiumFeature, FeatureHooks } from "./types/base.feature.js";
+import { HookContext } from "./types/index.js";
+import { datetime } from "../schema/index.js";
+import { AnyModel } from "../model/model.js";
 
 
 abstract class SoftDeleteAmend extends AnyModel {
