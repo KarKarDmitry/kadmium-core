@@ -9,7 +9,7 @@ import {
 	primary,
 	jsonb,
 	sections as s,
-} from "../schema/index.js";
+} from "../schema/dsl.js";
 import { controller, get } from "../controller/init.js";
 import { ControllerInstance } from "../controller/types/controller.js";
 import { ControllerContext } from "../route/types/context.js";

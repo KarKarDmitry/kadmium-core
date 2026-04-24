@@ -1,6 +1,6 @@
 {
   "name": "@karkardmitry/kadmium-core",
-  "version": "0.1.8",
+  "version": "0.1.13",
   "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
   "author": "Dmitry Karmanov (karkardmitry)",
   "license": "MIT",
@@ -44,6 +44,10 @@
       "default": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./core": {
+      "default": "./dist/core/index.js",
+      "types": "./dist/core/index.d.ts"
+    },
     "./schema": {
       "default": "./dist/schema/index.js",
       "types": "./dist/schema/index.d.ts"
@@ -57,8 +61,8 @@
       "types": "./dist/validation/index.d.ts"
     },
     "./route": {
-      "default": "./dist/route/adapters/rest.adapter.js",
-      "types": "./dist/route/adapters/rest.adapter.d.ts"
+      "default": "./dist/route/adapters/express.adapter.js",
+      "types": "./dist/route/adapters/express.adapter.d.ts"
     },
     "./sqb": {
       "default": "./dist/sqb/adapters/postgres/index.js",

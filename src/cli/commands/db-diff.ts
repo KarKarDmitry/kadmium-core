@@ -1,19 +1,9 @@
-import * as dotenv from "dotenv";
+
 import { Kadmium } from "../../kadmium-app.js";
 
 export async function run() {
-	dotenv.config();
 
-	Kadmium.configure({
-		schemaSources: ["./src/example-schemas/**/*.schema.ts"],
-		db: {
-			host: process.env.DB_HOST || "localhost",
-			port: Number(process.env.DB_PORT) || 5432,
-			database: process.env.DB_NAME || "kadmium",
-			login: process.env.DB_LOGIN || "postgres",
-			pass: process.env.DB_PASSWORD || "",
-		},
-	});
+	Kadmium.setConfig();
 
 	await Kadmium.start();
 	console.log("[db:diff] Schemas loaded and registered.\n");

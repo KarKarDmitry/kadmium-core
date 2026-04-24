@@ -1,4 +1,4 @@
-import { schema, form, primary, string, sections as s } from "../schema/index.js";
+import { schema, form, primary, string, sections as s } from "../schema/dsl.js";
 import { RevisionsFeature } from "../features/revisions.feature.js";
 
 export const departmentSchema = schema({

@@ -119,9 +119,9 @@ export class KadmiumApp {
     try {
       const configModule = await this._loadModule(targetPath);
       // Модуль может экспортировать default или именованный экспорт
-      const config = (configModule as any).default ?? configModule;
+      const config = (configModule as any).config ?? configModule;
       if (typeof config !== 'object' || config === null) {
-        throw new Error('Config file must export a configuration object.');
+        throw new Error('Config file must export a config constant.');
       }
       this.configure(config as KadmiumConfig);
       console.log(`[Kadmium] Config loaded successfully.`);

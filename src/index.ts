@@ -1,10 +1,10 @@
 export * from "./core/app-core.js";
 export * from "./core/types/config.js";
 export * from "./kadmium-app.js";
-export * from "./schema/index.js";
+export * from "./schema/dsl.js";
 export * from "./controller/init.js";
 export * from "./validation/index.js";
-export * from "./route/adapters/rest.adapter.js";
+export * from "./route/adapters/express.adapter.js";
 export * from "./sqb/adapters/postgres/index.js";
 
 // Auth module exports
@@ -21,8 +21,8 @@ export type {
   GenConfig,
 } from "./core/types/config.js";
 
-export { Kadmium, KadmiumApp, KadmiumConfig } from './kadmium-app.js'
-
+export { Kadmium, KadmiumApp } from './kadmium-app.js'
+export type { KadmiumConfig } from './kadmium-app.js'
 // Default export for convenience
 import { Kadmium } from "./kadmium-app.js";
 export default Kadmium;

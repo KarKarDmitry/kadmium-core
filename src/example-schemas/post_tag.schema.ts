@@ -1,4 +1,4 @@
-import { schema, form, primary, ref, sections as s } from "../schema/index.js";
+import { schema, form, primary, ref, sections as s } from "../schema/dsl.js";
 
 export const postTagSchema = schema({
 	collection: "post_tag",

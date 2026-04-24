@@ -10,7 +10,7 @@ import {
 	href,
 	primary,
 	ref,
-} from "../schema/index.js";
+} from "../schema/dsl.js";
 
 // 1. Define the schema object
 export const userSchema = schema({

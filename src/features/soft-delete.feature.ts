@@ -1,6 +1,6 @@
 import { KadmiumFeature, FeatureHooks } from "./types/base.feature.js";
 import { HookContext } from "./types/index.js";
-import { datetime } from "../schema/index.js";
+import { datetime } from "../schema/dsl.js";
 import { AnyModel } from "../model/model.js";
 
 

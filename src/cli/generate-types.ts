@@ -279,7 +279,7 @@ export async function run(args: string[] = []) {
 
 	const genConfig = appCore.gen ?? {}
 
-	const baseOutputDir = genConfig.models_output ?? "models";
+	const baseOutputDir = genConfig.models_output ?? "./src/models";
 	const importBase = genConfig.importBase ?? "@karkardmitry/kadmium-core";
 
 	for (const schemaCore of schemasToProcess) {

@@ -8,7 +8,7 @@ import {
   datetime,
   sections as s,
   action,
-} from "../schema/index.js";
+} from "../schema/dsl.js";
 import { AuditFeature } from "../features/audit.feature.js";
 import { RevisionsFeature } from "../features/revisions.feature.js";
 
