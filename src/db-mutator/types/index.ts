@@ -6,160 +6,160 @@
 /* ── Database Schema Objects ── */
 
 export interface DbTable {
-  name: string;
+    name: string;
 }
 
 export interface DbColumn {
-  name: string;
-  tableName: string;
-  dataType: string; // e.g., "uuid", "character varying", "integer", "boolean", "timestamp without time zone"
-  isNullable: boolean;
-  defaultValue: string | null;
-  isPrimary: boolean;
-  isUnique: boolean;
-  characterMaxLength: number | null;
-  autoIncrement?: boolean;
+    name: string;
+    tableName: string;
+    dataType: string; // e.g., "uuid", "character varying", "integer", "boolean", "timestamp without time zone"
+    isNullable: boolean;
+    defaultValue: string | null;
+    isPrimary: boolean;
+    isUnique: boolean;
+    characterMaxLength: number | null;
+    autoIncrement?: boolean;
 }
 
 export interface DbIndex {
-  name: string;
-  tableName: string;
-  columns: string[];
-  isUnique: boolean;
+    name: string;
+    tableName: string;
+    columns: string[];
+    isUnique: boolean;
 }
 
 export interface DbForeignKey {
-  name: string;
-  tableName: string;
-  columns: string[];
-  refTable: string;
-  refColumns: string[];
-  onDelete: "NO ACTION" | "CASCADE" | "SET NULL" | "RESTRICT" | "SET DEFAULT";
-  onUpdate: "NO ACTION" | "CASCADE" | "SET NULL" | "RESTRICT" | "SET DEFAULT";
+    name: string;
+    tableName: string;
+    columns: string[];
+    refTable: string;
+    refColumns: string[];
+    onDelete: 'NO ACTION' | 'CASCADE' | 'SET NULL' | 'RESTRICT' | 'SET DEFAULT';
+    onUpdate: 'NO ACTION' | 'CASCADE' | 'SET NULL' | 'RESTRICT' | 'SET DEFAULT';
 }
 
 /**
  * Full snapshot of the current database schema state.
  */
 export interface DbSchema {
-  tables: DbTable[];
-  columns: Map<string, DbColumn[]>; // key: table name
-  indexes: Map<string, DbIndex[]>; // key: table name
-  foreignKeys: Map<string, DbForeignKey[]>; // key: table name
+    tables: DbTable[];
+    columns: Map<string, DbColumn[]>; // key: table name
+    indexes: Map<string, DbIndex[]>; // key: table name
+    foreignKeys: Map<string, DbForeignKey[]>; // key: table name
 }
 
 /* ── Diff Operations ── */
 
 export interface AddColumnOp {
-  type: "add-column";
-  table: string;
-  column: DbColumn;
+    type: 'add-column';
+    table: string;
+    column: DbColumn;
 }
 
 export interface DropColumnOp {
-  type: "drop-column";
-  table: string;
-  columnName: string;
+    type: 'drop-column';
+    table: string;
+    columnName: string;
 }
 
 export interface AlterTypeOp {
-  type: "alter-type";
-  table: string;
-  columnName: string;
-  oldType: string;
-  newType: string;
+    type: 'alter-type';
+    table: string;
+    columnName: string;
+    oldType: string;
+    newType: string;
 }
 
 export interface AlterNullableOp {
-  type: "alter-nullable";
-  table: string;
-  columnName: string;
-  oldNullable: boolean;
-  newNullable: boolean;
+    type: 'alter-nullable';
+    table: string;
+    columnName: string;
+    oldNullable: boolean;
+    newNullable: boolean;
 }
 
 export interface AlterDefaultOp {
-  type: "alter-default";
-  table: string;
-  columnName: string;
-  oldDefault: string | null;
-  newDefault: string | null;
+    type: 'alter-default';
+    table: string;
+    columnName: string;
+    oldDefault: string | null;
+    newDefault: string | null;
 }
 
 export interface AddIndexOp {
-  type: "add-index";
-  index: DbIndex;
+    type: 'add-index';
+    index: DbIndex;
 }
 
 export interface DropIndexOp {
-  type: "drop-index";
-  indexName: string;
-  tableName: string;
+    type: 'drop-index';
+    indexName: string;
+    tableName: string;
 }
 
 export interface AddForeignKeyOp {
-  type: "add-foreign-key";
-  fk: DbForeignKey;
+    type: 'add-foreign-key';
+    fk: DbForeignKey;
 }
 
 export interface DropForeignKeyOp {
-  type: "drop-foreign-key";
-  fkName: string;
-  tableName: string;
+    type: 'drop-foreign-key';
+    fkName: string;
+    tableName: string;
 }
 
 export interface CreateTableOp {
-  type: "create-table";
-  table: string;
-  columns: DbColumn[];
+    type: 'create-table';
+    table: string;
+    columns: DbColumn[];
 }
 
 export interface DropTableOp {
-  type: "drop-table";
-  table: string;
+    type: 'drop-table';
+    table: string;
 }
 
 export type DiffOp =
-  | AddColumnOp
-  | DropColumnOp
-  | AlterTypeOp
-  | AlterNullableOp
-  | AlterDefaultOp
-  | AddIndexOp
-  | DropIndexOp
-  | AddForeignKeyOp
-  | DropForeignKeyOp
-  | CreateTableOp
-  | DropTableOp;
+    | AddColumnOp
+    | DropColumnOp
+    | AlterTypeOp
+    | AlterNullableOp
+    | AlterDefaultOp
+    | AddIndexOp
+    | DropIndexOp
+    | AddForeignKeyOp
+    | DropForeignKeyOp
+    | CreateTableOp
+    | DropTableOp;
 
 /**
  * Result of comparing SchemaCore definitions vs actual DB schema.
  */
 export interface DiffResult {
-  operations: DiffOp[];
-  hasChanges: boolean;
-  summary: {
-    addedTables: number;
-    droppedTables: number;
-    addedColumns: number;
-    droppedColumns: number;
-    alteredColumns: number;
-    addedIndexes: number;
-    droppedIndexes: number;
-    addedForeignKeys: number;
-    droppedForeignKeys: number;
-  };
+    operations: DiffOp[];
+    hasChanges: boolean;
+    summary: {
+        addedTables: number;
+        droppedTables: number;
+        addedColumns: number;
+        droppedColumns: number;
+        alteredColumns: number;
+        addedIndexes: number;
+        droppedIndexes: number;
+        addedForeignKeys: number;
+        droppedForeignKeys: number;
+    };
 }
 
 /**
  * Health check result — whether DB matches schema definitions.
  */
 export interface HealthCheckResult {
-  isHealthy: boolean;
-  issues: string[];
-  summary: {
-    totalTables: number;
-    expectedTables: number;
-    matchingTables: number;
-  };
+    isHealthy: boolean;
+    issues: string[];
+    summary: {
+        totalTables: number;
+        expectedTables: number;
+        matchingTables: number;
+    };
 }

@@ -1,66 +1,66 @@
-import { AnyModel } from "../../../model/model.js";
-import { WhereCondition } from "../../../sqb/kadmium-sqb.js";
-import { IRelationBuilder } from "../../field-builders/relation-builder.js";
-import { SelectableField } from "../selectable.js";
+import { AnyModel } from '../../../model/model.js';
+import { WhereCondition } from '../../../sqb/kadmium-sqb.js';
+import { IRelationBuilder } from '../../field-builders/relation-builder.js';
+import { SelectableField } from '../selectable.js';
 import {
-  AnySelectable,
-  FilterProxy,
-  GetFieldName,
-  GetFieldType,
-  IQueryBuilder,
-} from "./common.js";
+    AnySelectable,
+    FilterProxy,
+    GetFieldName,
+    GetFieldType,
+    IQueryBuilder,
+} from './common.js';
 
 // --- Query Finalizer Interfaces ---
 
 // A single, powerful finalizer for single-table queries.
 // T is the base schema type, TResult is the final object shape.
 export interface ISingleTableQuery<
-  T extends AnyModel,
-  R extends readonly IRelationBuilder<any, any, any, any, any>[],
-  TResult,
+    T extends AnyModel,
+    R extends readonly IRelationBuilder<any, any, any, any, any>[],
+    TResult,
 > extends IQueryBuilder {
-  where(
-    clause: (fields: FilterProxy<T>) => WhereCondition,
-  ): ISingleTableQuery<T, R, TResult>;
-  and(
-    clause: (fields: FilterProxy<T>) => WhereCondition,
-  ): ISingleTableQuery<T, R, TResult>;
-  or(
-    clause: (fields: FilterProxy<T>) => WhereCondition,
-  ): ISingleTableQuery<T, R, TResult>;
-  order(
-    selector: (fields: {
-      [K in keyof T]: SelectableField<T, K>;
-    }) => SelectableField<T, keyof T>,
-    direction?: "asc" | "desc",
-  ): ISingleTableQuery<T, R, TResult>;
-  groupBy(
-    selector: (fields: {
-      [K in keyof T]: SelectableField<T, K>;
-    }) => SelectableField<T, keyof T> | SelectableField<T, keyof T>[],
-  ): ISingleTableQuery<T, R, TResult>;
-  limit(count: number): ISingleTableQuery<T, R, TResult>;
-  offset(count: number): ISingleTableQuery<T, R, TResult>;
-  page(page: number, size: number): ISingleTableQuery<T, R, TResult>;
-  sql(): string;
-  go(): Promise<TResult[]>;
+    where(
+        clause: (fields: FilterProxy<T>) => WhereCondition,
+    ): ISingleTableQuery<T, R, TResult>;
+    and(
+        clause: (fields: FilterProxy<T>) => WhereCondition,
+    ): ISingleTableQuery<T, R, TResult>;
+    or(
+        clause: (fields: FilterProxy<T>) => WhereCondition,
+    ): ISingleTableQuery<T, R, TResult>;
+    order(
+        selector: (fields: {
+            [K in keyof T]: SelectableField<T, K>;
+        }) => SelectableField<T, keyof T>,
+        direction?: 'asc' | 'desc',
+    ): ISingleTableQuery<T, R, TResult>;
+    groupBy(
+        selector: (fields: {
+            [K in keyof T]: SelectableField<T, K>;
+        }) => SelectableField<T, keyof T> | SelectableField<T, keyof T>[],
+    ): ISingleTableQuery<T, R, TResult>;
+    limit(count: number): ISingleTableQuery<T, R, TResult>;
+    offset(count: number): ISingleTableQuery<T, R, TResult>;
+    page(page: number, size: number): ISingleTableQuery<T, R, TResult>;
+    sql(): string;
+    go(): Promise<TResult[]>;
 }
 
 export interface IFirstQuery<
-  T extends AnyModel,
-  R extends readonly IRelationBuilder<any, any, any, any, any>[],
-  TResult,
+    T extends AnyModel,
+    R extends readonly IRelationBuilder<any, any, any, any, any>[],
+    TResult,
 > extends IQueryBuilder {
-  sql(): string;
-  go(): Promise<TResult | undefined>;
+    sql(): string;
+    go(): Promise<TResult | undefined>;
 }
 
 export interface ICountQuery extends IQueryBuilder {
-  sql(): string;
-  go(): Promise<number>;
+    sql(): string;
+    go(): Promise<number>;
 }
 
 export interface IExistsQuery extends IQueryBuilder {
-  sql(): string;
-  go(): Promise<boolean>;
+    sql(): string;
+    go(): Promise<boolean>;
 }

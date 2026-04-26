@@ -1,118 +1,124 @@
 {
-  "name": "@karkardmitry/kadmium-core",
-  "version": "0.1.13",
-  "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
-  "author": "Dmitry Karmanov (karkardmitry)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/karkardmitry/kadmium.git"
-  },
-  "main": "dist/kadmium-app.js",
-  "type": "module",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "framework",
-    "backend",
-    "typescript",
-    "orm",
-    "schema-driven",
-    "repository-pattern",
-    "query-builder",
-    "postgres"
-  ],
-  "scripts": {
-    "prepublishOnly": "npm run build",
-    "build": "tsc",
-    "dev": "tsc -w",
-    "kadmium:gen:schema": "ts-node ./src/cli/generate-types.ts",
-    "kadmium:db:health": "ts-node ./src/cli/commands/db-health.ts",
-    "kadmium:db:diff": "ts-node ./src/cli/commands/db-diff.ts",
-    "kadmium:db:migrate": "ts-node ./src/cli/commands/db-migrate.ts",
-    "test": "npm run build && ts-node ./test/runners/integration-runner.ts && ts-node ./test/runners/unit-runner.ts",
-    "test:integration": "npm run build && ts-node ./test/runners/integration-runner.ts",
-    "test:unit": "npm run build && ts-node ./test/runners/unit-runner.ts"
-  },
-  "bin": {
-    "kadmium": "./dist/cli/index.js"
-  },
-  "exports": {
-    ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "name": "@karkardmitry/kadmium-core",
+    "version": "0.1.13",
+    "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
+    "author": "Dmitry Karmanov (karkardmitry)",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/karkardmitry/kadmium.git"
     },
-    "./core": {
-      "default": "./dist/core/index.js",
-      "types": "./dist/core/index.d.ts"
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "framework",
+        "backend",
+        "typescript",
+        "orm",
+        "schema-driven",
+        "repository-pattern",
+        "query-builder",
+        "postgres"
+    ],
+    "scripts": {
+        "prepublishOnly": "npm run build",
+        "build": "tsc",
+        "dev": "tsc -w",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "kadmium:gen:schema": "ts-node ./src/cli/generate-types.ts",
+        "kadmium:db:health": "ts-node ./src/cli/commands/db-health.ts",
+        "kadmium:db:diff": "ts-node ./src/cli/commands/db-diff.ts",
+        "kadmium:db:migrate": "ts-node ./src/cli/commands/db-migrate.ts",
+        "test": "npm run build && ts-node ./test/runners/integration-runner.ts && ts-node ./test/runners/unit-runner.ts",
+        "test:integration": "npm run build && ts-node ./test/runners/integration-runner.ts",
+        "test:unit": "npm run build && ts-node ./test/runners/unit-runner.ts"
     },
-    "./schema": {
-      "default": "./dist/schema/index.js",
-      "types": "./dist/schema/index.d.ts"
+    "bin": {
+        "kadmium": "./dist/cli/index.js"
     },
-    "./controller": {
-      "default": "./dist/controller/index.js",
-      "types": "./dist/controller/index.d.ts"
+    "exports": {
+        ".": {
+            "default": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./core": {
+            "default": "./dist/core/index.js",
+            "types": "./dist/core/index.d.ts"
+        },
+        "./schema": {
+            "default": "./dist/schema/index.js",
+            "types": "./dist/schema/index.d.ts"
+        },
+        "./controller": {
+            "default": "./dist/controller/index.js",
+            "types": "./dist/controller/index.d.ts"
+        },
+        "./validation": {
+            "default": "./dist/validation/index.js",
+            "types": "./dist/validation/index.d.ts"
+        },
+        "./route": {
+            "default": "./dist/route/adapters/express.adapter.js",
+            "types": "./dist/route/adapters/express.adapter.d.ts"
+        },
+        "./sqb": {
+            "default": "./dist/sqb/adapters/postgres/index.js",
+            "types": "./dist/sqb/adapters/postgres/index.d.ts"
+        },
+        "./auth": {
+            "default": "./dist/auth/index.js",
+            "types": "./dist/auth/index.d.ts"
+        },
+        "./cli": {
+            "default": "./dist/cli/index.js",
+            "types": "./dist/cli/index.d.ts"
+        },
+        "./db-mutator": {
+            "default": "./dist/db-mutator/index.js",
+            "types": "./dist/db-mutator/index.d.ts"
+        },
+        "./features": {
+            "default": "./dist/features/index.js",
+            "types": "./dist/features/index.d.ts"
+        },
+        "./model": {
+            "default": "./dist/model/index.js",
+            "types": "./dist/model/index.d.ts"
+        },
+        "./repo": {
+            "default": "./dist/repo/index.js",
+            "types": "./dist/repo/index.d.ts"
+        }
     },
-    "./validation": {
-      "default": "./dist/validation/index.js",
-      "types": "./dist/validation/index.d.ts"
+    "devDependencies": {
+        "@types/dotenv": "^6.1.1",
+        "@types/express": "^5.0.6",
+        "@types/node": "^20.14.2",
+        "@types/pluralize": "^0.0.33",
+        "prettier": "3.8.3",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
     },
-    "./route": {
-      "default": "./dist/route/adapters/express.adapter.js",
-      "types": "./dist/route/adapters/express.adapter.d.ts"
+    "peerDependencies": {
+        "express": "^5.2.1"
     },
-    "./sqb": {
-      "default": "./dist/sqb/adapters/postgres/index.js",
-      "types": "./dist/sqb/adapters/postgres/index.d.ts"
-    },
-    "./auth": {
-      "default": "./dist/auth/index.js",
-      "types": "./dist/auth/index.d.ts"
-    },
-    "./cli": {
-      "default": "./dist/cli/index.js",
-      "types": "./dist/cli/index.d.ts"
-    },
-    "./db-mutator": {
-      "default": "./dist/db-mutator/index.js",
-      "types": "./dist/db-mutator/index.d.ts"
-    },
-    "./features": {
-      "default": "./dist/features/index.js",
-      "types": "./dist/features/index.d.ts"
-    },
-    "./model": {
-      "default": "./dist/model/index.js",
-      "types": "./dist/model/index.d.ts"
-    },
-    "./repo": {
-      "default": "./dist/repo/index.js",
-      "types": "./dist/repo/index.d.ts"
+    "dependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/glob": "^8.1.0",
+        "@types/pg": "^8.11.6",
+        "bcrypt": "^6.0.0",
+        "chalk": "^4.1.2",
+        "cli-table3": "^0.6.5",
+        "dotenv": "^16.4.5",
+        "express": "^5.2.1",
+        "glob": "^10.4.1",
+        "pg": "^8.12.0",
+        "pluralize": "^8.0.0",
+        "zod": "^3.23.8"
     }
-  },
-  "devDependencies": {
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.6",
-    "@types/node": "^20.14.2",
-    "@types/pluralize": "^0.0.33",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/glob": "^8.1.0",
-    "@types/pg": "^8.11.6",
-    "bcrypt": "^6.0.0",
-    "chalk": "^4.1.2",
-    "cli-table3": "^0.6.5",
-    "dotenv": "^16.4.5",
-    "express": "^5.2.1",
-    "glob": "^10.4.1",
-    "pg": "^8.12.0",
-    "pluralize": "^8.0.0",
-    "zod": "^3.23.8"
-  }
 }

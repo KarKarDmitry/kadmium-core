@@ -1,75 +1,72 @@
-
-import { Kadmium } from "../../kadmium-app.js";
+import { Kadmium } from '../../kadmium-app.js';
 
 export async function run() {
+    await Kadmium.setConfig();
+    Kadmium.getDbMutator(true);
+    await Kadmium.preheat();
+    console.log('[db:migrate] Schemas loaded and registered.\n');
 
-	Kadmium.setConfig();
+    const dbMutator = Kadmium.getDbMutator();
+    if (!dbMutator) {
+        throw new Error('DbMutator not initialized');
+    }
 
-	await Kadmium.start();
-	console.log("[db:migrate] Schemas loaded and registered.\n");
+    const diff = await dbMutator.getDiff();
 
-	const dbMutator = Kadmium.getDbMutator();
-	if (!dbMutator) {
-		throw new Error("DbMutator not initialized");
-	}
+    if (!diff.hasChanges) {
+        console.log('✅ No changes detected. DB matches schemas.\n');
+        return;
+    }
 
-	const diff = await dbMutator.getDiff();
+    const dbAdapter = (Kadmium as any).dbAdapter;
+    const txAdapter = await dbAdapter.beginTransaction();
 
-	if (!diff.hasChanges) {
-		console.log("✅ No changes detected. DB matches schemas.\n");
-		return;
-	}
+    try {
+        const applied = await dbMutator.applyMigrations(txAdapter);
 
-	const dbAdapter = (Kadmium as any).dbAdapter;
-	const txAdapter = await dbAdapter.beginTransaction();
+        // статистика
+        let createdTables = 0,
+            addedColumns = 0,
+            alteredColumns = 0,
+            addedIndexes = 0,
+            addedFKs = 0;
 
-	try {
-		const applied = await dbMutator.applyMigrations(txAdapter);
+        for (const op of applied) {
+            if (op.startsWith('CREATE TABLE')) createdTables++;
+            else if (op.startsWith('ADD COLUMN')) addedColumns++;
+            else if (
+                op.startsWith('ALTER TYPE') ||
+                op.startsWith('ALTER NULLABLE') ||
+                op.startsWith('ALTER DEFAULT')
+            )
+                alteredColumns++;
+            else if (op.startsWith('ADD INDEX')) addedIndexes++;
+            else if (op.startsWith('ADD FK')) addedFKs++;
+        }
 
-		// статистика
-		let createdTables = 0,
-			addedColumns = 0,
-			alteredColumns = 0,
-			addedIndexes = 0,
-			addedFKs = 0;
+        console.log('═══════════════════════════════════════════');
+        console.log('  Migrations Applied');
+        console.log('═══════════════════════════════════════════');
+        console.log(`  Added tables:      ${createdTables}`);
+        console.log(`  Added columns:     ${addedColumns}`);
+        console.log(`  Altered columns:   ${alteredColumns}`);
+        console.log(`  Added indexes:     ${addedIndexes}`);
+        console.log(`  Added FKs:         ${addedFKs}`);
+        console.log('═══════════════════════════════════════════\n');
 
-		for (const op of applied) {
-			if (op.startsWith("CREATE TABLE")) createdTables++;
-			else if (op.startsWith("ADD COLUMN")) addedColumns++;
-			else if (
-				op.startsWith("ALTER TYPE") ||
-				op.startsWith("ALTER NULLABLE") ||
-				op.startsWith("ALTER DEFAULT")
-			)
-				alteredColumns++;
-			else if (op.startsWith("ADD INDEX")) addedIndexes++;
-			else if (op.startsWith("ADD FK")) addedFKs++;
-		}
+        console.log('✅ Migrations applied successfully:\n');
+        for (const op of applied) {
+            console.log(`   ✓ ${op}`);
+        }
+        console.log();
+    } catch (err) {
+        try {
+            await txAdapter.rollback();
+        } catch {
+            // ок, частичный commit уже мог произойти
+        }
 
-		console.log("═══════════════════════════════════════════");
-		console.log("  Migrations Applied");
-		console.log("═══════════════════════════════════════════");
-		console.log(`  Added tables:      ${createdTables}`);
-		console.log(`  Added columns:     ${addedColumns}`);
-		console.log(`  Altered columns:   ${alteredColumns}`);
-		console.log(`  Added indexes:     ${addedIndexes}`);
-		console.log(`  Added FKs:         ${addedFKs}`);
-		console.log("═══════════════════════════════════════════\n");
-
-		console.log("✅ Migrations applied successfully:\n");
-		for (const op of applied) {
-			console.log(`   ✓ ${op}`);
-		}
-		console.log();
-
-	} catch (err) {
-		try {
-			await txAdapter.rollback();
-		} catch {
-			// ок, частичный commit уже мог произойти
-		}
-
-		console.error("\n❌ Migration failed.\n");
-		throw err; // ❗ важно: не process.exit
-	}
+        console.error('\n❌ Migration failed.\n');
+        throw err; // ❗ важно: не process.exit
+    }
 }

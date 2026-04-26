@@ -1,9 +1,9 @@
 export interface DbConfig {
-	host: string;
-	port: number;
-	database: string;
-	login: string;
-	pass: string;
+    host: string;
+    port: number;
+    database: string;
+    login: string;
+    pass: string;
 }
 
 /**
@@ -11,7 +11,7 @@ export interface DbConfig {
  * Включает connection settings + параметры безопасности.
  */
 export interface DbAdapterConfig {
-	connection: DbConfig;
-	/** Типы полей, которые не должны попадать в публичный вывод (по умолчанию Set(["password"])) */
-	securedTypes: Set<string>;
+    connection: DbConfig;
+    /** Типы полей, которые не должны попадать в публичный вывод (по умолчанию Set(["password"])) */
+    securedTypes: Set<string>;
 }

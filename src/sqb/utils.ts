@@ -1,4 +1,4 @@
-import { WhereGroup } from "./kadmium-sqb.js";
+import { WhereGroup } from './kadmium-sqb.js';
 
 /**
  * Deep clones a WhereGroup while preserving objects with Symbol properties
@@ -9,13 +9,13 @@ import { WhereGroup } from "./kadmium-sqb.js";
  * - SqlGenerator._cloneWhereGroup() (include subquery WHERE cloning)
  */
 export function cloneWhereGroup(group: WhereGroup): WhereGroup {
-	return {
-		op: group.op,
-		conditions: group.conditions.map((cond) => {
-			if ("conditions" in cond) {
-				return cloneWhereGroup(cond);
-			}
-			return { ...cond };
-		}),
-	};
+    return {
+        op: group.op,
+        conditions: group.conditions.map((cond) => {
+            if ('conditions' in cond) {
+                return cloneWhereGroup(cond);
+            }
+            return { ...cond };
+        }),
+    };
 }

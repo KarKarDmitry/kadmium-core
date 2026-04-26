@@ -1,6 +1,6 @@
-import { AnyModel } from "../../model/model.js";
-import { ControllerContext } from "./context.js";
-import { RouteDefinition } from "./route.js";
+import { AnyModel } from '../../model/model.js';
+import { ControllerContext } from './context.js';
+import { RouteDefinition } from './route.js';
 
 /**
  * Interface that all route adapters must implement.
@@ -8,30 +8,30 @@ import { RouteDefinition } from "./route.js";
  * without changing the controller/core layer.
  */
 export interface IRouteAdapter {
-	/**
-	 * Registers a route with the underlying HTTP framework.
-	 * @param route - The route definition containing method, path, and handler.
-	 */
-	registerRoute(route: RouteDefinition<any>): void;
+    /**
+     * Registers a route with the underlying HTTP framework.
+     * @param route - The route definition containing method, path, and handler.
+     */
+    registerRoute(route: RouteDefinition<any>): void;
 
-	/**
-	 * Starts listening for incoming connections.
-	 * @param port - The port to listen on.
-	 * @param host - The host to bind to (optional).
-	 */
-	start(port: number, host?: string): Promise<void>;
+    /**
+     * Starts listening for incoming connections.
+     * @param port - The port to listen on.
+     * @param host - The host to bind to (optional).
+     */
+    start(port: number, host?: string): Promise<void>;
 }
 
 /**
  * A handler function that processes a request within a typed context.
  */
 export type RouteHandler<T extends AnyModel> = (
-	ctx: ControllerContext<T>,
+    ctx: ControllerContext<T>,
 ) => Promise<any> | any;
 
 /**
  * Middleware function that runs before or after a route handler.
  */
 export type RouteMiddleware<T extends AnyModel> = (
-	ctx: ControllerContext<T>,
+    ctx: ControllerContext<T>,
 ) => Promise<void> | void;

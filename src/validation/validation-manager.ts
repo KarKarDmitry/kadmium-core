@@ -1,4 +1,4 @@
-import { AppCore } from "../core/app-core.js";
+import { AppCore } from '../core/app-core.js';
 
 /**
  * Manages validation-related concerns for the application.
@@ -6,8 +6,8 @@ import { AppCore } from "../core/app-core.js";
  * It establishes the `Kadmium.Validation` namespace in the new architecture.
  */
 export class ValidationManager {
-  constructor(private appCore: AppCore) {}
+    constructor(private appCore: AppCore) {}
 
-  // Future methods could go here, for example:
-  // getValidatorFor(schema) { ... }
+    // Future methods could go here, for example:
+    // getValidatorFor(schema) { ... }
 }

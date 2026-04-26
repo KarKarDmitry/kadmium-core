@@ -1,6 +1,6 @@
-import { IS_FILTER_BUILDER } from "../symbols.js";
-import { WhereCondition } from "../../sqb/kadmium-sqb.js";
-import { BaseFilterBuilder } from "./base-filter.builder.js";
+import { IS_FILTER_BUILDER } from '../symbols.js';
+import { WhereCondition } from '../../sqb/kadmium-sqb.js';
+import { BaseFilterBuilder } from './base-filter.builder.js';
 
 // This is a common TypeScript pattern for mixins.
 // It defines a generic type for a class constructor.
@@ -11,26 +11,26 @@ type GConstructor<T = {}> = new (...args: any[]) => T;
  * with `null()` and `notNull()` methods.
  */
 export function NullableMixin<
-	TBase extends GConstructor<BaseFilterBuilder<any, any>>,
+    TBase extends GConstructor<BaseFilterBuilder<any, any>>,
 >(Base: TBase) {
-	return class Nullable extends Base {
-		public readonly [IS_FILTER_BUILDER] = true;
-		public get null(): WhereCondition {
-			return {
-				field: this.field as string,
-				alias: this.alias,
-				op: "IS",
-				value: null,
-			};
-		}
+    return class Nullable extends Base {
+        public readonly [IS_FILTER_BUILDER] = true;
+        public get null(): WhereCondition {
+            return {
+                field: this.field as string,
+                alias: this.alias,
+                op: 'IS',
+                value: null,
+            };
+        }
 
-		public get notNull(): WhereCondition {
-			return {
-				field: this.field as string,
-				alias: this.alias,
-				op: "IS NOT",
-				value: null,
-			};
-		}
-	};
+        public get notNull(): WhereCondition {
+            return {
+                field: this.field as string,
+                alias: this.alias,
+                op: 'IS NOT',
+                value: null,
+            };
+        }
+    };
 }

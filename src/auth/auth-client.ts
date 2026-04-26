@@ -1,219 +1,221 @@
-import type { AppCore } from "../core/app-core.js";
+import type { AppCore } from '../core/app-core.js';
 
 export interface AuthServiceConfig {
-  authServiceUrl: string;
-  appId: string;
-  callbackUrl: string;
-  clusterKey: string;
+    authServiceUrl: string;
+    appId: string;
+    callbackUrl: string;
+    clusterKey: string;
 }
 
 export interface ServiceRegistrationResult {
-  app_id: string;
-  access_key: string;
-  refresh_key: string;
-  expires_in: number;
+    app_id: string;
+    access_key: string;
+    refresh_key: string;
+    expires_in: number;
 }
 
 export interface AuthTokens {
-  accessToken?: string;
-  refreshToken?: string;
+    accessToken?: string;
+    refreshToken?: string;
 }
 
 export class AuthClient {
-  private config: AuthServiceConfig;
-  private appCore: AppCore;
-  private tokens: AuthTokens = {};
+    private config: AuthServiceConfig;
+    private appCore: AppCore;
+    private tokens: AuthTokens = {};
 
-  constructor(appCore: AppCore, config: AuthServiceConfig) {
-    this.appCore = appCore;
-    this.config = config;
-  }
-
-  /**
-   * Register service with the central auth service
-   */
-  async registerService(): Promise<ServiceRegistrationResult> {
-    if (!this.appCore.app.use_auth) {
-      console.log("Auth is disabled, skipping service registration");
-      return {
-        app_id: this.config.appId,
-        access_key: "disabled",
-        refresh_key: "disabled",
-        expires_in: 0,
-      };
+    constructor(appCore: AppCore, config: AuthServiceConfig) {
+        this.appCore = appCore;
+        this.config = config;
     }
 
-    try {
-      const response = await fetch(
-        `${this.config.authServiceUrl}/auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            app_id: this.config.appId,
-            callback_url: this.config.callbackUrl,
-            cluster_key: this.config.clusterKey,
-          }),
-        },
-      );
+    /**
+     * Register service with the central auth service
+     */
+    async registerService(): Promise<ServiceRegistrationResult> {
+        if (!this.appCore.app.use_auth) {
+            console.log('Auth is disabled, skipping service registration');
+            return {
+                app_id: this.config.appId,
+                access_key: 'disabled',
+                refresh_key: 'disabled',
+                expires_in: 0,
+            };
+        }
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Failed to register service: ${response.status} ${errorText}`,
-        );
-      }
+        try {
+            const response = await fetch(
+                `${this.config.authServiceUrl}/auth/register`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        app_id: this.config.appId,
+                        callback_url: this.config.callbackUrl,
+                        cluster_key: this.config.clusterKey,
+                    }),
+                },
+            );
 
-      const result: any = await response.json();
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(
+                    `Failed to register service: ${response.status} ${errorText}`,
+                );
+            }
 
-      if (result.success && result.data) {
-        console.log(
-          `Service ${this.config.appId} registered successfully with auth service`,
-        );
-        return result.data;
-      } else {
-        throw new Error("Invalid response from auth service");
-      }
-    } catch (error) {
-      console.error("Failed to register with auth service:", error);
-      throw error;
-    }
-  }
+            const result: any = await response.json();
 
-  /**
-   * Unregister service from the central auth service
-   */
-  async unregisterService(): Promise<void> {
-    if (!this.appCore.app.use_auth) {
-      console.log("Auth is disabled, skipping service unregistration");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `${this.config.authServiceUrl}/auth/unregister`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            app_id: this.config.appId,
-            cluster_key: this.config.clusterKey,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Failed to unregister service: ${response.status} ${errorText}`,
-        );
-      }
-
-      console.log(`Service ${this.config.appId} unregistered successfully`);
-    } catch (error) {
-      console.error("Failed to unregister from auth service:", error);
-      throw error;
-    }
-  }
-
-  /**
-   * Verify access token with auth service
-   */
-  async verifyToken(token: string): Promise<boolean> {
-    if (!this.appCore.app.use_auth) {
-      return true; // Auth disabled, always valid
+            if (result.success && result.data) {
+                console.log(
+                    `Service ${this.config.appId} registered successfully with auth service`,
+                );
+                return result.data;
+            } else {
+                throw new Error('Invalid response from auth service');
+            }
+        } catch (error) {
+            console.error('Failed to register with auth service:', error);
+            throw error;
+        }
     }
 
-    try {
-      const response = await fetch(
-        `${this.config.authServiceUrl}/auth/verify`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+    /**
+     * Unregister service from the central auth service
+     */
+    async unregisterService(): Promise<void> {
+        if (!this.appCore.app.use_auth) {
+            console.log('Auth is disabled, skipping service unregistration');
+            return;
+        }
 
-      return response.ok;
-    } catch (error) {
-      console.error("Failed to verify token:", error);
-      return false;
+        try {
+            const response = await fetch(
+                `${this.config.authServiceUrl}/auth/unregister`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        app_id: this.config.appId,
+                        cluster_key: this.config.clusterKey,
+                    }),
+                },
+            );
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(
+                    `Failed to unregister service: ${response.status} ${errorText}`,
+                );
+            }
+
+            console.log(
+                `Service ${this.config.appId} unregistered successfully`,
+            );
+        } catch (error) {
+            console.error('Failed to unregister from auth service:', error);
+            throw error;
+        }
     }
-  }
 
-  /**
-   * Refresh access token using refresh token
-   */
-  async refreshToken(refreshToken: string): Promise<string | null> {
-    if (!this.appCore.app.use_auth) {
-      return null; // Auth disabled, no refresh needed
+    /**
+     * Verify access token with auth service
+     */
+    async verifyToken(token: string): Promise<boolean> {
+        if (!this.appCore.app.use_auth) {
+            return true; // Auth disabled, always valid
+        }
+
+        try {
+            const response = await fetch(
+                `${this.config.authServiceUrl}/auth/verify`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+
+            return response.ok;
+        } catch (error) {
+            console.error('Failed to verify token:', error);
+            return false;
+        }
     }
 
-    try {
-      const response = await fetch(
-        `${this.config.authServiceUrl}/auth/refresh`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            refresh_token: refreshToken,
-            app_id: this.config.appId,
-          }),
-        },
-      );
+    /**
+     * Refresh access token using refresh token
+     */
+    async refreshToken(refreshToken: string): Promise<string | null> {
+        if (!this.appCore.app.use_auth) {
+            return null; // Auth disabled, no refresh needed
+        }
 
-      if (!response.ok) {
-        return null;
-      }
+        try {
+            const response = await fetch(
+                `${this.config.authServiceUrl}/auth/refresh`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        refresh_token: refreshToken,
+                        app_id: this.config.appId,
+                    }),
+                },
+            );
 
-      const result: any = await response.json();
-      return result.access_token || null;
-    } catch (error) {
-      console.error("Failed to refresh token:", error);
-      return null;
+            if (!response.ok) {
+                return null;
+            }
+
+            const result: any = await response.json();
+            return result.access_token || null;
+        } catch (error) {
+            console.error('Failed to refresh token:', error);
+            return null;
+        }
     }
-  }
 
-  /**
-   * Set tokens for the service
-   */
-  setTokens(tokens: AuthTokens): void {
-    this.tokens = tokens;
-  }
+    /**
+     * Set tokens for the service
+     */
+    setTokens(tokens: AuthTokens): void {
+        this.tokens = tokens;
+    }
 
-  /**
-   * Get current tokens
-   */
-  getTokens(): AuthTokens {
-    return { ...this.tokens };
-  }
+    /**
+     * Get current tokens
+     */
+    getTokens(): AuthTokens {
+        return { ...this.tokens };
+    }
 
-  /**
-   * Check if auth is enabled
-   */
-  isAuthEnabled(): boolean {
-    return this.appCore.app.use_auth;
-  }
+    /**
+     * Check if auth is enabled
+     */
+    isAuthEnabled(): boolean {
+        return this.appCore.app.use_auth;
+    }
 
-  /**
-   * Get auth service URL
-   */
-  getAuthServiceUrl(): string {
-    return this.config.authServiceUrl;
-  }
+    /**
+     * Get auth service URL
+     */
+    getAuthServiceUrl(): string {
+        return this.config.authServiceUrl;
+    }
 
-  /**
-   * Get app ID
-   */
-  getAppId(): string {
-    return this.config.appId;
-  }
+    /**
+     * Get app ID
+     */
+    getAppId(): string {
+        return this.config.appId;
+    }
 }
