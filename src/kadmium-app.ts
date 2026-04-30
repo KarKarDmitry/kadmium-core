@@ -28,6 +28,7 @@ import { IRouteAdapter } from './route/types/adapter.js';
 import { DbMutator } from './db-mutator/db-mutator.js';
 import { HealthCheckResult } from './db-mutator/types/index.js';
 import { AuthClient, AuthServiceConfig } from './auth/auth-client.js';
+import { JwksManager } from './auth/jwks-manager.js';
 import path from 'node:path';
 
 export type KadmiumConfig = {
@@ -50,6 +51,8 @@ export class KadmiumApp {
 
     // Auth client
     public Auth?: AuthClient;
+    // JWKS Manager for local token verification
+    public JwksManager?: JwksManager;
 
     // Internal state
     public readonly appCore: AppCore;
@@ -114,27 +117,39 @@ export class KadmiumApp {
     }
 
     public async setConfig(configPath?: string) {
-        const targetPath = configPath
-            ? path.resolve(configPath)
-            : path.join(process.cwd(), 'kadmium.config.ts');
+        // Try .ts first (dev), fallback to .js (production build)
+        const extensions = ['.ts', '.js'];
+        let lastError: unknown;
 
-        console.log(`[Kadmium] Loading config from ${targetPath}`);
-        try {
-            const configModule = await this._loadModule(targetPath);
-            // Модуль может экспортировать default или именованный экспорт
-            const config = (configModule as any).config ?? configModule;
-            if (typeof config !== 'object' || config === null) {
-                throw new Error('Config file must export a config constant.');
+        for (const ext of extensions) {
+            const targetPath = configPath
+                ? path.resolve(configPath)
+                : path.join(process.cwd(), `kadmium.config${ext}`);
+
+            console.log(`[Kadmium] Loading config from ${targetPath}`);
+            try {
+                const configModule = await this._loadModule(targetPath);
+                // Модуль может экспортировать default или именованный экспорт
+                const config = (configModule as any).config ?? configModule;
+                if (typeof config !== 'object' || config === null) {
+                    throw new Error(
+                        'Config file must export a config constant.',
+                    );
+                }
+                this.configure(config as KadmiumConfig);
+                console.log(`[Kadmium] Config loaded successfully.`);
+                return; // Success — exit loop
+            } catch (err) {
+                lastError = err;
+                console.error(
+                    `[Kadmium] Failed to load config from ${targetPath}:`,
+                    err,
+                );
             }
-            this.configure(config as KadmiumConfig);
-            console.log(`[Kadmium] Config loaded successfully.`);
-        } catch (err) {
-            console.error(
-                `[Kadmium] Failed to load config from ${targetPath}:`,
-                err,
-            );
-            throw err; // Генератор должен упасть, если конфиг критичен
         }
+
+        // Both .ts and .js failed — throw the last error
+        throw lastError;
     }
 
     public registerSchema(schema: Schema): void {
@@ -172,6 +187,20 @@ export class KadmiumApp {
                     error,
                 );
                 // Don't fail startup, but log warning
+            }
+
+            // Initialize JWKS Manager for local token verification
+            try {
+                this.JwksManager = new JwksManager({
+                    jwksUrl: `${this.Auth.getAuthServiceUrl()}/.well-known/jwks`,
+                });
+                await this.JwksManager.init();
+                console.log(`[Kadmium] JWKS Manager initialized`);
+            } catch (error) {
+                console.error(
+                    `[Kadmium] Failed to initialize JWKS Manager:`,
+                    error,
+                );
             }
         }
 

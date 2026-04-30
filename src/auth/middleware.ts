@@ -1,6 +1,8 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { AppCore } from '../core/app-core.js';
 import type { AuthClient } from './auth-client.js';
+import { jwtVerify } from 'jose';
+import type { JwksManager } from './jwks-manager.js';
 
 export interface AuthMiddlewareOptions {
     requireAuth?: boolean;
@@ -23,9 +25,14 @@ export interface AuthRequest extends Request {
 }
 
 /**
- * Create authentication middleware for Express
+ * Create authentication middleware for Express.
+ * Uses local JWT verification via JWKS instead of HTTP calls to auth service.
  */
-export function createAuthMiddleware(appCore: AppCore, authClient: AuthClient) {
+export function createAuthMiddleware(
+    appCore: AppCore,
+    authClient: AuthClient,
+    jwksManager?: JwksManager,
+) {
     return (options: AuthMiddlewareOptions = {}) => {
         const {
             requireAuth = true,
@@ -56,85 +63,65 @@ export function createAuthMiddleware(appCore: AppCore, authClient: AuthClient) {
             const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
             try {
-                // Verify token with auth service
-                const isValid = await authClient.verifyToken(token);
-
-                if (!isValid) {
-                    if (requireAuth) {
-                        req.authError = 'Invalid or expired token';
-                        return res.status(401).json({
-                            error: 'Unauthorized',
-                            message: 'Invalid or expired token',
-                        });
-                    }
-                    return next();
+                // Verify token locally using JWKS public key
+                if (!jwksManager) {
+                    throw new Error('JWKS Manager not configured');
                 }
 
-                // Parse JWT payload (assuming standard JWT format)
-                try {
-                    const payload = JSON.parse(
-                        Buffer.from(token.split('.')[1], 'base64').toString(),
-                    ) as AuthUser;
+                const publicKey = await jwksManager.getPublicKey();
+                const { payload } = await jwtVerify(token, publicKey, {
+                    algorithms: ['RS256'],
+                    audience: authClient.getAppId(),
+                });
 
-                    // Validate appId matches
-                    if (payload.appId !== authClient.getAppId()) {
-                        req.authError =
-                            'Token issued for different application';
+                // Build AuthUser from verified payload
+                const authUser: AuthUser = {
+                    userId: payload.sub!,
+                    username: (payload as any).username as string,
+                    roles: ((payload as any).roles as string[]) || [],
+                    groups: ((payload as any).groups as string[]) || [],
+                    appId: authClient.getAppId(),
+                    type: 'access',
+                };
+
+                // Check roles if specified
+                if (allowedRoles.length > 0) {
+                    const hasRole = allowedRoles.some((role) =>
+                        authUser.roles.includes(role),
+                    );
+                    if (!hasRole) {
+                        req.authError = 'Insufficient permissions';
                         return res.status(403).json({
                             error: 'Forbidden',
-                            message: 'Token issued for different application',
+                            message: 'Insufficient permissions',
                         });
                     }
-
-                    // Check roles if specified
-                    if (allowedRoles.length > 0) {
-                        const hasRole = allowedRoles.some((role) =>
-                            payload.roles.includes(role),
-                        );
-                        if (!hasRole) {
-                            req.authError = 'Insufficient permissions';
-                            return res.status(403).json({
-                                error: 'Forbidden',
-                                message: 'Insufficient permissions',
-                            });
-                        }
-                    }
-
-                    // Check groups if specified
-                    if (allowedGroups.length > 0) {
-                        const hasGroup = allowedGroups.some((group) =>
-                            payload.groups.includes(group),
-                        );
-                        if (!hasGroup) {
-                            req.authError = 'User not in required groups';
-                            return res.status(403).json({
-                                error: 'Forbidden',
-                                message: 'User not in required groups',
-                            });
-                        }
-                    }
-
-                    // Attach user to request
-                    req.user = payload;
-                    next();
-                } catch (parseError) {
-                    console.error('Failed to parse JWT token:', parseError);
-                    if (requireAuth) {
-                        req.authError = 'Invalid token format';
-                        return res.status(401).json({
-                            error: 'Unauthorized',
-                            message: 'Invalid token format',
-                        });
-                    }
-                    next();
                 }
-            } catch (error) {
-                console.error('Auth verification error:', error);
+
+                // Check groups if specified
+                if (allowedGroups.length > 0) {
+                    const hasGroup = allowedGroups.some((group) =>
+                        authUser.groups.includes(group),
+                    );
+                    if (!hasGroup) {
+                        req.authError = 'User not in required groups';
+                        return res.status(403).json({
+                            error: 'Forbidden',
+                            message: 'User not in required groups',
+                        });
+                    }
+                }
+
+                // Attach user to request
+                req.user = authUser;
+                next();
+            } catch (err) {
+                console.error('Auth verification error:', err);
                 if (requireAuth) {
-                    req.authError = 'Authentication service error';
-                    return res.status(500).json({
-                        error: 'Internal Server Error',
-                        message: 'Authentication service error',
+                    req.authError = 'Invalid or expired token';
+                    return res.status(401).json({
+                        error: 'Unauthorized',
+                        message: 'Invalid or expired token',
                     });
                 }
                 next();
@@ -146,8 +133,18 @@ export function createAuthMiddleware(appCore: AppCore, authClient: AuthClient) {
 /**
  * Helper middleware to require authentication
  */
-export function requireAuth(appCore: AppCore, authClient: AuthClient) {
-    return createAuthMiddleware(appCore, authClient)({ requireAuth: true });
+export function requireAuth(
+    appCore: AppCore,
+    authClient: AuthClient,
+    jwksManager?: JwksManager,
+) {
+    return createAuthMiddleware(
+        appCore,
+        authClient,
+        jwksManager,
+    )({
+        requireAuth: true,
+    });
 }
 
 /**
@@ -157,10 +154,12 @@ export function requireRoles(
     roles: string[],
     appCore: AppCore,
     authClient: AuthClient,
+    jwksManager?: JwksManager,
 ) {
     return createAuthMiddleware(
         appCore,
         authClient,
+        jwksManager,
     )({
         requireAuth: true,
         allowedRoles: roles,
@@ -174,10 +173,12 @@ export function requireGroups(
     groups: string[],
     appCore: AppCore,
     authClient: AuthClient,
+    jwksManager?: JwksManager,
 ) {
     return createAuthMiddleware(
         appCore,
         authClient,
+        jwksManager,
     )({
         requireAuth: true,
         allowedGroups: groups,

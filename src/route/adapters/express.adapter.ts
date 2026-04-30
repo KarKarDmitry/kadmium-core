@@ -46,7 +46,7 @@ export class ExpressRouteAdapter implements IRouteAdapter {
      */
     async start(port: number, host?: string): Promise<void> {
         return new Promise((resolve) => {
-            const h = host || 'localhost';
+            const h = host || '0.0.0.0';
             this.app.listen(port, h, () => {
                 console.log(
                     `[ExpressRouteAdapter] Server listening on http://${h}:${port}`,

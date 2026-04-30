@@ -5,6 +5,7 @@ export interface AuthServiceConfig {
     appId: string;
     callbackUrl: string;
     clusterKey: string;
+    jwksCacheTtl?: number; // NEW: cache TTL for JWKS keys in seconds (default 3600)
 }
 
 export interface ServiceRegistrationResult {
@@ -14,15 +15,9 @@ export interface ServiceRegistrationResult {
     expires_in: number;
 }
 
-export interface AuthTokens {
-    accessToken?: string;
-    refreshToken?: string;
-}
-
 export class AuthClient {
     private config: AuthServiceConfig;
     private appCore: AppCore;
-    private tokens: AuthTokens = {};
 
     constructor(appCore: AppCore, config: AuthServiceConfig) {
         this.appCore = appCore;
@@ -123,82 +118,6 @@ export class AuthClient {
     }
 
     /**
-     * Verify access token with auth service
-     */
-    async verifyToken(token: string): Promise<boolean> {
-        if (!this.appCore.app.use_auth) {
-            return true; // Auth disabled, always valid
-        }
-
-        try {
-            const response = await fetch(
-                `${this.config.authServiceUrl}/auth/verify`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
-
-            return response.ok;
-        } catch (error) {
-            console.error('Failed to verify token:', error);
-            return false;
-        }
-    }
-
-    /**
-     * Refresh access token using refresh token
-     */
-    async refreshToken(refreshToken: string): Promise<string | null> {
-        if (!this.appCore.app.use_auth) {
-            return null; // Auth disabled, no refresh needed
-        }
-
-        try {
-            const response = await fetch(
-                `${this.config.authServiceUrl}/auth/refresh`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        refresh_token: refreshToken,
-                        app_id: this.config.appId,
-                    }),
-                },
-            );
-
-            if (!response.ok) {
-                return null;
-            }
-
-            const result: any = await response.json();
-            return result.access_token || null;
-        } catch (error) {
-            console.error('Failed to refresh token:', error);
-            return null;
-        }
-    }
-
-    /**
-     * Set tokens for the service
-     */
-    setTokens(tokens: AuthTokens): void {
-        this.tokens = tokens;
-    }
-
-    /**
-     * Get current tokens
-     */
-    getTokens(): AuthTokens {
-        return { ...this.tokens };
-    }
-
-    /**
      * Check if auth is enabled
      */
     isAuthEnabled(): boolean {
@@ -217,5 +136,12 @@ export class AuthClient {
      */
     getAppId(): string {
         return this.config.appId;
+    }
+
+    /**
+     * Get cluster key for server-to-server authentication
+     */
+    getClusterKey(): string {
+        return this.config.clusterKey;
     }
 }
