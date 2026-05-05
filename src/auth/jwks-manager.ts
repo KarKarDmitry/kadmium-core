@@ -1,4 +1,5 @@
-import { CryptoKey, importJWK } from 'jose';
+// Dynamic import for jose (ESM-only package in CJS context)
+type CryptoKey = any;
 
 interface JwksKey {
     kty: string;
@@ -77,7 +78,8 @@ export class JwksManager {
             throw new Error('No keys found in JWKS response');
         }
 
-        // Import the key using jose
+        // Import the key using jose (dynamic import for ESM-only package)
+        const { importJWK } = await import('jose');
         this.publicKey = (await importJWK(
             keyData as any,
             'RS256',

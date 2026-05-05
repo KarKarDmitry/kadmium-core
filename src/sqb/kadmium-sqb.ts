@@ -80,7 +80,7 @@ export class KadmiumSqb<T extends AnyModel> {
      * @param adapter The database adapter that will generate and run the query.
      * @param collectionName The name of the table/collection to query.
      */
-    @Profiler.Profile(import.meta.url)
+    @Profiler.Profile(__filename)
     public async execute(adapter: DbAdapter): Promise<Partial<T>[]> {
         return adapter.execute(this);
     }

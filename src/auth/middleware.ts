@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { AppCore } from '../core/app-core.js';
 import type { AuthClient } from './auth-client.js';
-import { jwtVerify } from 'jose';
 import type { JwksManager } from './jwks-manager.js';
 
 export interface AuthMiddlewareOptions {
@@ -69,6 +68,7 @@ export function createAuthMiddleware(
                 }
 
                 const publicKey = await jwksManager.getPublicKey();
+                const { jwtVerify } = await import('jose');
                 const { payload } = await jwtVerify(token, publicKey, {
                     algorithms: ['RS256'],
                     audience: authClient.getAppId(),

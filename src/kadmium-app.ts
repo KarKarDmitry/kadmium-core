@@ -117,19 +117,21 @@ export class KadmiumApp {
     }
 
     public async setConfig(configPath?: string) {
-        // Try .ts first (dev), fallback to .js (production build)
-        const extensions = ['.ts', '.js'];
+        // Possible paths to check, in order of priority
+        const candidates = [
+            configPath,
+            path.join(process.cwd(), 'dist', 'kadmium.config.js'), // production
+            path.join(process.cwd(), 'src', 'kadmium.config.ts'), // development
+            path.join(process.cwd(), 'kadmium.config.ts'), // fallback (legacy)
+            path.join(process.cwd(), 'kadmium.config.js'), // fallback (legacy)
+        ].filter(Boolean) as string[];
+
         let lastError: unknown;
 
-        for (const ext of extensions) {
-            const targetPath = configPath
-                ? path.resolve(configPath)
-                : path.join(process.cwd(), `kadmium.config${ext}`);
-
+        for (const targetPath of candidates) {
             console.log(`[Kadmium] Loading config from ${targetPath}`);
             try {
                 const configModule = await this._loadModule(targetPath);
-                // Модуль может экспортировать default или именованный экспорт
                 const config = (configModule as any).config ?? configModule;
                 if (typeof config !== 'object' || config === null) {
                     throw new Error(
@@ -138,17 +140,16 @@ export class KadmiumApp {
                 }
                 this.configure(config as KadmiumConfig);
                 console.log(`[Kadmium] Config loaded successfully.`);
-                return; // Success — exit loop
+                return;
             } catch (err) {
                 lastError = err;
-                console.error(
+                console.warn(
                     `[Kadmium] Failed to load config from ${targetPath}:`,
-                    err,
+                    (err as Error).message,
                 );
             }
         }
 
-        // Both .ts and .js failed — throw the last error
         throw lastError;
     }
 
@@ -368,7 +369,7 @@ export class KadmiumApp {
             return await import(fileUrl);
         } catch {
             // Fallback to require for .ts files (ts-node compatibility)
-            const req = createRequire(import.meta.url);
+            const req = createRequire(__filename);
             return req(absolutePath);
         }
     }

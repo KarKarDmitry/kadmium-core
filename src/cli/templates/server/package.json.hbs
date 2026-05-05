@@ -1,0 +1,23 @@
+{
+  "name": "{{serviceName}}",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx ./src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "db:migrate": "kadmium db:migrate",
+    "db:diff": "kadmium db:diff"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "@karkardmitry/kadmium-core": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "tsx": "^4.21.0",
+    "typescript": "^5.4.5"
+  },
+  "_port": {{port}}
+}

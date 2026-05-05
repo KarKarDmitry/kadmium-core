@@ -1,0 +1,31 @@
+import type { KadmiumConfig } from "@karkardmitry/kadmium-core";
+
+const isProduction = process.env.NODE_ENV === "production";
+
+export const config: KadmiumConfig = {
+	app: { use_auth: true },
+	auth: {
+		authServiceUrl: process.env.AUTH_SERVICE_URL || "{{authExternalUrl}}",
+		appId: "{{appId}}",
+		callbackUrl: process.env.CALLBACK_URL || "{{protocol}}://{{appId}}.{{domain}}/",
+		clusterKey: process.env.CLUSTER_KEY || "{{clusterKey}}",
+	},
+	schemaSources: [
+		isProduction
+			? "./dist/schemas/*.schema.js"
+			: "./src/schemas/*.schema.ts",
+	],
+	controllerSources: [
+		isProduction
+			? "./dist/domain/controllers/*.controller.js"
+			: "./src/domain/controllers/*.controller.ts",
+	],
+	gen: { models_output: "./src/domain/entities" },
+	db: {
+		host: process.env.DB_HOST,
+		port: Number(process.env.DB_PORT),
+		database: process.env.DB_NAME,
+		login: process.env.DB_LOGIN,
+		pass: process.env.DB_PASSWORD,
+	},
+};

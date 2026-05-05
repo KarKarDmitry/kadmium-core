@@ -1,0 +1,49 @@
+import { Kadmium } from "@karkardmitry/kadmium-core";
+import { ExpressRouteAdapter } from "@karkardmitry/kadmium-core/route";
+import {
+	createAuthMiddleware,
+	createCallbackRoute,
+} from "@karkardmitry/kadmium-core/auth";
+import express from "express";
+
+// Allow self-signed SSL certificates for development
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+async function main() {
+	await Kadmium.setConfig();
+	await Kadmium.start();
+
+	const expressApp = express();
+	expressApp.use(express.json());
+
+	// Public health endpoint
+	expressApp.get("/public/hello", (_req, res) => {
+		res.json({ message: "hello_world", service: "{{serviceName}}" });
+	});
+
+	// OAuth callback endpoint for SPA
+	if (Kadmium.Auth) {
+		expressApp.use(createCallbackRoute(Kadmium.Auth));
+	}
+
+	// Protect all other routes via JWKS middleware
+	if (Kadmium.Auth && Kadmium.JwksManager) {
+		expressApp.use(
+			createAuthMiddleware(
+				Kadmium.appCore,
+				Kadmium.Auth,
+				Kadmium.JwksManager,
+			)({ requireAuth: true }),
+		);
+	}
+
+	const adapter = new ExpressRouteAdapter(expressApp);
+	await Kadmium.listen(adapter, {{port}});
+
+	console.log(`[{{serviceName}}] Server running on http://localhost:{{port}}`);
+}
+
+main().catch((err) => {
+	console.error("\n\nFATAL ERROR:", err);
+	process.exit(1);
+});

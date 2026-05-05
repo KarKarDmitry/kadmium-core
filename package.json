@@ -1,6 +1,6 @@
 {
     "name": "@karkardmitry/kadmium-core",
-    "version": "0.1.13",
+    "version": "0.1.16",
     "description": "A powerful, schema-driven backend framework for TypeScript, designed for high type-safety and developer productivity.",
     "author": "Dmitry Karmanov (karkardmitry)",
     "license": "MIT",
@@ -8,7 +8,6 @@
         "type": "git",
         "url": "https://github.com/karkardmitry/kadmium.git"
     },
-    "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
@@ -27,6 +26,7 @@
     "scripts": {
         "prepublishOnly": "npm run build",
         "build": "tsc",
+        "postbuild": "xcopy /E /I /Y src\\cli\\templates dist\\cli\\templates",
         "dev": "tsc -w",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
@@ -39,7 +39,7 @@
         "test:unit": "npm run build && ts-node ./test/runners/unit-runner.ts"
     },
     "bin": {
-        "kadmium": "./dist/cli/index.js"
+        "kadmium": "./bin/kadmium.mjs"
     },
     "exports": {
         ".": {
@@ -96,6 +96,7 @@
         }
     },
     "devDependencies": {
+        "@types/cross-spawn": "^6.0.6",
         "@types/dotenv": "^6.1.1",
         "@types/express": "^5.0.6",
         "@types/node": "^20.14.2",
@@ -114,6 +115,7 @@
         "bcrypt": "^6.0.0",
         "chalk": "^4.1.2",
         "cli-table3": "^0.6.5",
+        "cross-spawn": "^7.0.6",
         "dotenv": "^16.4.5",
         "express": "^5.2.1",
         "glob": "^10.4.1",

@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Field_OPT, InputField_OPT } from '../schema/types/fields.js';
-import type { RelationMetadata } from '../repo/types/relations.js';
-import { AppCore } from '../core/app-core.js';
-import { SchemaCore } from '../core/schema-core.js';
-import { Kadmium } from '../kadmium-app.js';
-import type { Schema_OPT } from '../schema/types/schema.js';
-import type { KadmiumFeature } from '../features/types/base.feature.js';
+import type { Field_OPT, InputField_OPT } from '../../schema/types/fields.js';
+import type { RelationMetadata } from '../../repo/types/relations.js';
+import { AppCore } from '../../core/app-core.js';
+import { SchemaCore } from '../../core/schema-core.js';
+import { Kadmium } from '../../kadmium-app.js';
+import type { Schema_OPT } from '../../schema/types/schema.js';
+import type { KadmiumFeature } from '../../features/types/base.feature.js';
 
 // ─────────────────────────────────────────────
 // Type Guard

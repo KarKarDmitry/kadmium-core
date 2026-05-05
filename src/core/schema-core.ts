@@ -117,7 +117,7 @@ export class SchemaCore {
         this.validationCache = undefined;
     }
 
-    @Profiler.Profile(import.meta.url)
+    @Profiler.Profile(__filename)
     public init(app: AppCore): this {
         if (this.initialized) return this;
 
@@ -143,7 +143,7 @@ export class SchemaCore {
      *     static readonly _collection = "user";
      *   }
      */
-    @Profiler.Profile(import.meta.url)
+    @Profiler.Profile(__filename)
     public bindModelClass(ModelClass: new () => AnyModel): void {
         if (this.modelClass === ModelClass) return; // уже привязана
 
